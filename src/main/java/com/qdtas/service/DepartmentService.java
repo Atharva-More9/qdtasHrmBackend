@@ -18,7 +18,8 @@ public interface DepartmentService {
 
     public JsonMessage deleteById(long deptId);
 
-    public Set<Department> getAllDepartments();
+    Set<Department> getAllDepartments(int pgn, int size);
+
     public List<User> getAllUsers(long DeptId);
 
 }

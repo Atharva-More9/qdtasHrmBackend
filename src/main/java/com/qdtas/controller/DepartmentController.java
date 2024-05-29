@@ -113,9 +113,13 @@ public class DepartmentController {
                     ),
             }
     )
-     @PostMapping("/getAllDepartments")
-    public ResponseEntity<?> getAll() {
-        return new ResponseEntity<>(dsr.getAllDepartments(), HttpStatus.OK);
+    @PostMapping("/getAllDepartments")
+    public ResponseEntity<?> getAll(
+            @RequestParam(value = "pgn", defaultValue = "1") int pgn,
+            @RequestParam(value = "sz", defaultValue = "10") int size) {
+        pgn = pgn < 0 ? 0 : pgn - 1;
+        size = size <= 0 ? 5 : size;
+        return new ResponseEntity<>(dsr.getAllDepartments(pgn, size), HttpStatus.OK);
     }
 
     @Operation(

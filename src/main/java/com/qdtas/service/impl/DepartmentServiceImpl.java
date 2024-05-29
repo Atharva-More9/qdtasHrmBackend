@@ -6,12 +6,12 @@ import com.qdtas.entity.User;
 import com.qdtas.exception.ResourceNotFoundException;
 import com.qdtas.repository.DepartmentRepository;
 import com.qdtas.service.DepartmentService;
-import io.swagger.v3.core.util.Json;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -49,10 +49,12 @@ public class DepartmentServiceImpl implements DepartmentService {
             return new JsonMessage("Something Went Wrong");
         }
     }
+
     @Override
-    public Set<Department> getAllDepartments() {
-        return new HashSet<>(drp.findAll());
+    public Set<Department> getAllDepartments(int pgn, int size) {
+        return drp.findAll(PageRequest.of(pgn, size, Sort.by(Sort.Direction.ASC, "deptName"))).stream().collect(Collectors.toSet());
     }
+
 
     @Override
     public List<User> getAllUsers(long deptId) {
