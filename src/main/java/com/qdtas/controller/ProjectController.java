@@ -188,7 +188,7 @@ public class ProjectController {
                     )
             }
     )
-    @PostMapping("/getAllProjects")
+    @GetMapping("/getAllProjects")
     public ResponseEntity<?> getAll(@RequestParam(value = "pgn", defaultValue = "1") int pgn,
                                     @RequestParam(value = "sz", defaultValue = "10") int size) {
         pgn = pgn < 0 ? 0 : pgn - 1;
