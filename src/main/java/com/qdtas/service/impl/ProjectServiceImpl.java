@@ -50,12 +50,6 @@ public class ProjectServiceImpl implements ProjectService {
     }
 
     @Override
-    public void deleteProject(long pId) {
-        Project p = prp.findById(pId).orElseThrow(() -> new ResourceNotFoundException("Project", "Project ID", String.valueOf(pId)));
-        prp.delete(p);
-    }
-
-    @Override
     public Project getProjectById(long pId) {
         return prp.findById(pId).orElseThrow(() -> new ResourceNotFoundException("Project", "Project ID", String.valueOf(pId)));
     }
@@ -193,6 +187,12 @@ public class ProjectServiceImpl implements ProjectService {
         }
 
         return prp.save(project);
+    }
+
+    @Override
+    public void deleteProject(long pId) {
+        Project p = prp.findById(pId).orElseThrow(() -> new ResourceNotFoundException("Project", "Project ID", String.valueOf(pId)));
+        prp.delete(p);
     }
 
 

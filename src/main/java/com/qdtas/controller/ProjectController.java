@@ -76,7 +76,7 @@ public class ProjectController {
                     )
             }
     )
-    @PostMapping("/update/{pId}")
+    @PutMapping("/update/{pId}")
     public ResponseEntity<?> updateProject(@Valid @RequestBody ProjectDTO pd, @PathVariable long pId) {
         try {
             return new ResponseEntity(psr.updateProject(pd, pId), HttpStatus.OK);
@@ -399,8 +399,8 @@ public class ProjectController {
             summary = "13.Delete Project",
             responses = {
                     @ApiResponse(
-                            description = "No Content",
-                            responseCode = "204",
+                            description = "Successful deletion",
+                            responseCode = "200",
                             content = @io.swagger.v3.oas.annotations.media.Content
                     ),
                     @ApiResponse(
@@ -414,9 +414,9 @@ public class ProjectController {
     public ResponseEntity<?> deleteProject(@PathVariable long pId) {
         try {
             psr.deleteProject(pId);
-            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+            return new ResponseEntity<>(new JsonMessage("Project deleted successfully"), HttpStatus.OK);
         } catch (Exception e) {
-            return new ResponseEntity<>(new JsonMessage("Something Went Wrong"), HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<>(new JsonMessage("Something went wrong while deleting the project"), HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
