@@ -200,8 +200,6 @@ public class ProjectController {
 
     // Get Project By Id
 
-    // Get Project By Id
-
     @ApiOperation(value = "Get Project by ID", position = 1)
     @Operation(
             description = "Get project by ID",
@@ -392,4 +390,34 @@ public class ProjectController {
         Project project = psr.removeManagers(empIds, pID);
         return new ResponseEntity<>(project , HttpStatus.OK);
     }
+
+    //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    @ApiOperation(value = "Delete Project", position = 1)
+    @Operation(
+            description = "Delete project by ID",
+            summary = "13.Delete Project",
+            responses = {
+                    @ApiResponse(
+                            description = "No Content",
+                            responseCode = "204",
+                            content = @io.swagger.v3.oas.annotations.media.Content
+                    ),
+                    @ApiResponse(
+                            description = "Internal Server Error",
+                            responseCode = "500",
+                            content = @io.swagger.v3.oas.annotations.media.Content
+                    )
+            }
+    )
+    @DeleteMapping("/delete/{pId}")
+    public ResponseEntity<?> deleteProject(@PathVariable long pId) {
+        try {
+            psr.deleteProject(pId);
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        } catch (Exception e) {
+            return new ResponseEntity<>(new JsonMessage("Something Went Wrong"), HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
 }
