@@ -393,6 +393,7 @@ public class ProjectController {
 
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+    //Delete Project
     @ApiOperation(value = "Delete Project", position = 1)
     @Operation(
             description = "Delete project by ID",
@@ -419,5 +420,4 @@ public class ProjectController {
             return new ResponseEntity<>(new JsonMessage("Something went wrong while deleting the project"), HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
-
 }

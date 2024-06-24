@@ -3,21 +3,24 @@ package com.qdtas.service;
 import com.qdtas.dto.LeaveDTO;
 import com.qdtas.entity.Leave;
 
+import java.util.Date;
 import java.util.List;
 
 public interface LeaveService {
 
-    public List<Leave> getLeaveByEmpId(Long id);
+    List<Leave> getLeaveByEmpId(Long id);
 
-    public List<Leave> getAllLeaveRequests(int pgn,int size);
+    List<Leave> getAllLeaveRequests(int pgn, int size);
 
-    public Leave createLeaveRequest(long empId,LeaveDTO leaveRequest);
+    Leave createLeaveRequest(long empId, LeaveDTO leaveRequest);
 
-    public Leave updateLeaveRequest(Long id, LeaveDTO updatedLeaveRequest);
+    Leave updateLeaveRequest(Long id, LeaveDTO updatedLeaveRequest);
 
-    public void deleteLeaveRequest(Long id);
+    void deleteLeaveRequest(Long id);
 
-    public Leave approveLeaveRequest(Long id);
+    Leave approveLeaveRequest(Long id);
 
-    public Leave rejectLeaveRequest(Long id);
+    Leave rejectLeaveRequest(Long id);
+
+    boolean hasApprovedLeaveOnDates(long empId, Date startDate, Date endDate);
 }

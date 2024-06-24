@@ -194,6 +194,4 @@ public class ProjectServiceImpl implements ProjectService {
         Project p = prp.findById(pId).orElseThrow(() -> new ResourceNotFoundException("Project", "Project ID", String.valueOf(pId)));
         prp.delete(p);
     }
-
-
 }
