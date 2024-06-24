@@ -59,12 +59,15 @@ public class LeaveController {
 @PostMapping("/create/{empId}")
 public ResponseEntity<?> createLeaveRequest(@Valid @RequestBody LeaveDTO leaveRequest, @PathVariable long empId) {
     try {
-        leaveRequestService.createLeaveRequest(empId, leaveRequest);
+        Leave leave = leaveRequestService.createLeaveRequest(empId, leaveRequest);
         return ResponseEntity.status(HttpStatus.CREATED).body("Leave applied successfully.");
     } catch (IllegalStateException e) {
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Your leave request cannot be processed because it overlaps with an existing approved leave. Please adjust your leave dates and try again.\n");
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+    } catch (Exception e) {
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("An error occurred while processing your request.");
     }
 }
+
 
 /*
 

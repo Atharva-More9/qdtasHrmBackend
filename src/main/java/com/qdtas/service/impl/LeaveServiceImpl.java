@@ -51,7 +51,7 @@ public class LeaveServiceImpl implements LeaveService {
 
         // Check if there are any approved leaves on the requested dates
         if (hasApprovedLeaveOnDates(empId, startDate, endDate)) {
-            throw new IllegalStateException("Leave request failed: those days already have an approved leave");
+            throw new IllegalStateException("Your leave request cannot be processed because it overlaps with an existing approved leave. Please adjust your leave dates and try again.");
         }
 
         Leave l = new Leave();
