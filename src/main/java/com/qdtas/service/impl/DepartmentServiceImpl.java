@@ -51,8 +51,8 @@ public class DepartmentServiceImpl implements DepartmentService {
     }
 
     @Override
-    public Set<Department> getAllDepartments(int pgn, int size) {
-        return drp.findAll(PageRequest.of(pgn, size, Sort.by(Sort.Direction.ASC, "deptName"))).stream().collect(Collectors.toSet());
+    public List<Department> getAllDepartments(int pgn, int size) {
+        return drp.findAll(PageRequest.of(pgn, size, Sort.by(Sort.Direction.ASC, "deptName"))).stream().collect(Collectors.toList());
     }
 
 

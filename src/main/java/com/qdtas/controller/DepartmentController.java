@@ -1,6 +1,7 @@
 package com.qdtas.controller;
 
 import com.qdtas.entity.Department;
+import com.qdtas.entity.User;
 import com.qdtas.service.DepartmentService;
 import io.swagger.annotations.Api;
 import io.swagger.v3.oas.annotations.Hidden;
@@ -13,6 +14,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @PreAuthorize("hasRole('ADMIN')")
 @RestController
@@ -113,13 +116,15 @@ public class DepartmentController {
                     ),
             }
     )
-    @PostMapping("/getAllDepartments")
+    @GetMapping("/getAllDepartments")
     public ResponseEntity<?> getAll(
             @RequestParam(value = "pgn", defaultValue = "1") int pgn,
             @RequestParam(value = "sz", defaultValue = "10") int size) {
         pgn = pgn < 0 ? 0 : pgn - 1;
         size = size <= 0 ? 5 : size;
-        return new ResponseEntity<>(dsr.getAllDepartments(pgn, size), HttpStatus.OK);
+        List<Department> ul = dsr.getAllDepartments(pgn, size);
+        return new ResponseEntity<>(ul, HttpStatus.OK);
+
     }
  
     @Operation(
