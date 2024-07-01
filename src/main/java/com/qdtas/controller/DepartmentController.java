@@ -121,7 +121,7 @@ public class DepartmentController {
         size = size <= 0 ? 5 : size;
         return new ResponseEntity<>(dsr.getAllDepartments(pgn, size), HttpStatus.OK);
     }
-
+ 
     @Operation(
             description = "Department Name Update",
             summary = "Update Department Name",
