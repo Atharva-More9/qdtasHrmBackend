@@ -7,7 +7,7 @@ import com.qdtas.exception.ResourceNotFoundException;
 import com.qdtas.repository.TaskRepository;
 import com.qdtas.service.TaskService;
 import com.qdtas.service.UserService;
-import com.qdtas.utility.TaskStatus;
+import com.qdtas.utils.TaskStatus;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;

@@ -1,6 +1,6 @@
 package com.qdtas.dto;
 
-import com.qdtas.utility.NoSpaces;
+import com.qdtas.utils.NoSpaces;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
 import lombok.AllArgsConstructor;

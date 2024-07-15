@@ -103,7 +103,7 @@ public class LeaveController {
                     ),
             }
     )
-    @PostMapping("/delete/{leaveId}")
+    @DeleteMapping("/delete/{leaveId}")
     public ResponseEntity<?> deleteLeaveRequest(@PathVariable Long leaveId) {
         leaveRequestService.deleteLeaveRequest(leaveId);
         return new ResponseEntity(new JsonMessage("Successfully Deleted"), HttpStatus.OK);

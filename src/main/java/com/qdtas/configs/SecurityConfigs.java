@@ -2,7 +2,8 @@ package com.qdtas.configs;
 
 import com.qdtas.security.CustomUserDetailsService;
 import com.qdtas.security.JwtAuthenticationFilter;
-import com.qdtas.utility.AppConstants;
+
+import com.qdtas.utils.AppConstants;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

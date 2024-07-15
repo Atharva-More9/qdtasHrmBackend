@@ -1,4 +1,4 @@
-package com.qdtas.utility;
+package com.qdtas.utils;
 
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;

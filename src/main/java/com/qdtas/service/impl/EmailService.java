@@ -12,7 +12,7 @@ import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
-import com.qdtas.utility.AppConstants;
+import com.qdtas.utils.AppConstants;
 
 import java.util.List;
 import java.util.UUID;

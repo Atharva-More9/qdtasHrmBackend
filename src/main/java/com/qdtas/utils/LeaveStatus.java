@@ -1,4 +1,4 @@
-package com.qdtas.utility;
+package com.qdtas.utils;
 
 public enum LeaveStatus {
     PENDING,

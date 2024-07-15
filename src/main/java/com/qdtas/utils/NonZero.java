@@ -1,4 +1,4 @@
-package com.qdtas.utility;
+package com.qdtas.utils;
 
 import jakarta.validation.Constraint;
 import jakarta.validation.Payload;

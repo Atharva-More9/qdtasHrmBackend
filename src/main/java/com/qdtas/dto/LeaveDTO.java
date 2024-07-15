@@ -1,13 +1,9 @@
 package com.qdtas.dto;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.qdtas.entity.User;
-import com.qdtas.utility.NonZero;
 import io.swagger.v3.oas.annotations.Hidden;
-import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Past;
 import jakarta.validation.constraints.Pattern;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
