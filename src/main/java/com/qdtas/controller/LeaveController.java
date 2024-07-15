@@ -30,45 +30,36 @@ public class LeaveController {
     @Hidden
     @GetMapping("/getAllLeaves")
     public ResponseEntity<?> getAllLeaveRequests(@RequestParam(value = "pgn",defaultValue = "1") int pgn,
-                                         @RequestParam(value = "sz" ,defaultValue = "10") int size){
+                                                 @RequestParam(value = "sz" ,defaultValue = "10") int size){
         pgn = pgn < 0 ? 0 : pgn-1;
         size = size <= 0 ? 10 : size;
         List<Leave> l = leaveRequestService.getAllLeaveRequests(pgn, size);
         return new ResponseEntity<>(l, HttpStatus.OK);
 
     }
-/*
-    @Operation(
-            description = "Create Leave Request",
-            summary = "1. Create leave",
-            responses = {
-                    @ApiResponse(
-                            description = "Created",
-                            responseCode = "201",
-                            content = @io.swagger.v3.oas.annotations.media.Content
+    /*
+        @Operation(
+                description = "Create Leave Request",
+                summary = "1. Create leave",
+                responses = {
+                        @ApiResponse(
+                                description = "Created",
+                                responseCode = "201",
+                                content = @io.swagger.v3.oas.annotations.media.Content
 
-                     ),
-                    @ApiResponse(
-                            description = "Bad Request",
-                            responseCode = "400",
-                            content = @io.swagger.v3.oas.annotations.media.Content
-                    ),
-            }
-    )*/
-@Hidden
-@PostMapping("/create/{empId}")
-public ResponseEntity<?> createLeaveRequest(@Valid @RequestBody LeaveDTO leaveRequest, @PathVariable long empId) {
-    try {
-        Leave leave = leaveRequestService.createLeaveRequest(empId, leaveRequest);
-        return ResponseEntity.status(HttpStatus.CREATED).body("Leave applied successfully.");
-    } catch (IllegalStateException e) {
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
-    } catch (Exception e) {
-        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("An error occurred while processing your request.");
+                         ),
+                        @ApiResponse(
+                                description = "Bad Request",
+                                responseCode = "400",
+                                content = @io.swagger.v3.oas.annotations.media.Content
+                        ),
+                }
+        )*/
+    @Hidden
+    @PostMapping("/create/{empId}")
+    public ResponseEntity<?> createLeaveRequest(@Valid @RequestBody LeaveDTO leaveRequest,@PathVariable long empId) {
+        return new ResponseEntity(leaveRequestService.createLeaveRequest(empId,leaveRequest), HttpStatus.CREATED);
     }
-}
-
-
 /*
 
     @Operation(
@@ -114,8 +105,8 @@ public ResponseEntity<?> createLeaveRequest(@Valid @RequestBody LeaveDTO leaveRe
     )
     @PostMapping("/delete/{leaveId}")
     public ResponseEntity<?> deleteLeaveRequest(@PathVariable Long leaveId) {
-            leaveRequestService.deleteLeaveRequest(leaveId);
-            return new ResponseEntity(new JsonMessage("Successfully Deleted"), HttpStatus.OK);
+        leaveRequestService.deleteLeaveRequest(leaveId);
+        return new ResponseEntity(new JsonMessage("Successfully Deleted"), HttpStatus.OK);
     }
 
     @Operation(
