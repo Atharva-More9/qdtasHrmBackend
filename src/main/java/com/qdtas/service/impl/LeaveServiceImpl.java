@@ -75,14 +75,12 @@ public class LeaveServiceImpl implements LeaveService {
         l.setReason(leaveRequest.getReason());
         l.setType(leaveRequest.getType());
 
-        // Convert start and end dates to IST
-        ZoneId istZoneId = ZoneId.of("Asia/Kolkata");
+        // Convert start and end dates to avoid timezone issues
+        LocalDate startDate = leaveRequest.getStartDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+        LocalDate endDate = leaveRequest.getEndDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
 
-        LocalDate startDate = leaveRequest.getStartDate().toInstant().atZone(istZoneId).toLocalDate();
-        LocalDate endDate = leaveRequest.getEndDate().toInstant().atZone(istZoneId).toLocalDate();
-
-        l.setStartDate(Date.from(startDate.atStartOfDay(istZoneId).toInstant()));
-        l.setEndDate(Date.from(endDate.atStartOfDay(istZoneId).toInstant()));
+        l.setStartDate(Date.from(startDate.atStartOfDay(ZoneId.systemDefault()).toInstant()));
+        l.setEndDate(Date.from(endDate.atStartOfDay(ZoneId.systemDefault()).toInstant()));
 
         User u = usr.getById(empId);
         l.setEmployee(u);
