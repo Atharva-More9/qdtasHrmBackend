@@ -10,5 +10,8 @@ public interface LeaveRepository extends JpaRepository<Leave, Long> {
 
     @Query(value = "SELECT * FROM leave_request WHERE user_id= " +
             " %:empId% ORDER BY start_date desc ", nativeQuery = true)
+
     List<Leave> findAllByEmployeeId(long empId);
+
+    List<Leave> findByEmployeeIdAndStatus(long empId, String name);
 }

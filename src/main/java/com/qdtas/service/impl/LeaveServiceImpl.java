@@ -15,10 +15,16 @@ import org.springframework.data.domain.Sort;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 
+import java.util.*;
+import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 @Service
 public class LeaveServiceImpl implements LeaveService {
@@ -41,33 +47,59 @@ public class LeaveServiceImpl implements LeaveService {
                 .stream().toList();
     }
 
-    public Leave createLeaveRequest(long empId,LeaveDTO leaveRequest) {
-        Leave l =new Leave();
+    private boolean datesOverlap(Date startDate, Date endDate, LocalDate startDate1, LocalDate endDate1) {
+        LocalDate start1 = startDate.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+        LocalDate end1 = endDate.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+        return !start1.isAfter(endDate1) && !startDate1.isAfter(end1);
+    }
+
+    private boolean hasOverlappingApprovedLeave(long empId, Date startDate, Date endDate) {
+        List<Leave> approvedLeaves = leaveRequestRepository.findByEmployeeIdAndStatus(empId, LeaveStatus.APPROVED.name());
+        for (Leave leave : approvedLeaves) {
+            if (datesOverlap(leave.getStartDate(), leave.getEndDate(), startDate.toInstant().atZone(ZoneId.systemDefault()).toLocalDate(), endDate.toInstant().atZone(ZoneId.systemDefault()).toLocalDate())) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    @Override
+    public Leave createLeaveRequest(long empId, LeaveDTO leaveRequest) {
+        // Check for overlapping approved leaves
+        if (hasOverlappingApprovedLeave(empId, leaveRequest.getStartDate(), leaveRequest.getEndDate())) {
+            throw new RuntimeException("The leave request overlaps with an approved leave.");
+        }
+
+        Leave l = new Leave();
         l.setStatus(LeaveStatus.PENDING.name());
         l.setReason(leaveRequest.getReason());
         l.setType(leaveRequest.getType());
-        l.setStartDate(leaveRequest.getStartDate());
-        l.setEndDate(leaveRequest.getEndDate());
+
+        // Convert start and end dates to avoid timezone issues
+        LocalDate startDate = leaveRequest.getStartDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+        LocalDate endDate = leaveRequest.getEndDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+
+        l.setStartDate(Date.from(startDate.atStartOfDay(ZoneId.systemDefault()).toInstant()));
+        l.setEndDate(Date.from(endDate.atStartOfDay(ZoneId.systemDefault()).toInstant()));
+
         User u = usr.getById(empId);
         l.setEmployee(u);
         Set<Project> projects = u.getProjects();
-        Set<User> managerList=new HashSet<>();
-        for(Project p:projects){
+        Set<User> managerList = new HashSet<>();
+        for (Project p : projects) {
             managerList.addAll(p.getManagers());
         }
-        List<String> mEmails=new ArrayList<>();
-        for(User m:managerList){
+        List<String> mEmails = new ArrayList<>();
+        for (User m : managerList) {
             mEmails.add(m.getEmail());
         }
 
-        for (String e:mEmails){
-            System.out.println(e);
-        }
         Leave save = leaveRequestRepository.save(l);
-        ems.sendLeaveRequestEmail(mEmails,save);
+        ems.sendLeaveRequestEmail(mEmails, save);
         return save;
-
     }
+
+
 
     public Leave updateLeaveRequest(Long id, LeaveDTO updatedLeaveRequest) {
         Leave existingLeaveRequest = leaveRequestRepository.findById(id)

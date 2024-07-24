@@ -57,8 +57,13 @@ public class LeaveController {
         )*/
     @Hidden
     @PostMapping("/create/{empId}")
-    public ResponseEntity<?> createLeaveRequest(@Valid @RequestBody LeaveDTO leaveRequest,@PathVariable long empId) {
-        return new ResponseEntity(leaveRequestService.createLeaveRequest(empId,leaveRequest), HttpStatus.CREATED);
+    public ResponseEntity<?> createLeaveRequest(@Valid @RequestBody LeaveDTO leaveRequest, @PathVariable long empId) {
+        try {
+            Leave createdLeave = leaveRequestService.createLeaveRequest(empId, leaveRequest);
+            return new ResponseEntity<>(createdLeave, HttpStatus.CREATED);
+        } catch (Exception e) {
+            return new ResponseEntity<>(new JsonMessage(e.getMessage()), HttpStatus.BAD_REQUEST);
+        }
     }
 /*
 
