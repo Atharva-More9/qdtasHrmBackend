@@ -43,7 +43,7 @@ public class LeaveServiceImpl implements LeaveService {
     }
 
     public List<Leave> getAllLeaveRequests(int pgn, int size) {
-        return leaveRequestRepository.findAll(   PageRequest.of(pgn, size, Sort.by(Sort.Direction.DESC, "startDate") )  )
+        return leaveRequestRepository.findAll(   PageRequest.of(pgn, size, Sort.by(Sort.Direction.DESC, "leaveId") )  )
                 .stream().toList();
     }
 
