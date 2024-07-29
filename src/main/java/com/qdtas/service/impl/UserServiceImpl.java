@@ -222,7 +222,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public List<User> getAllUsers(int pgn, int size) {
-        return urp.findAll(   PageRequest.of(pgn, size, Sort.by(Sort.Direction.ASC, "firstName","lastName") )  )
+        return urp.findAll(   PageRequest.of(pgn, size, Sort.by(Sort.Direction.DESC, "userId") )  )
                 .stream().toList();
     }
 
