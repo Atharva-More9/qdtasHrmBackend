@@ -53,6 +53,8 @@ public class User{
     @Column(length = 100)
     private String designation;
 
+    private String employmentStatus;
+
     private Boolean emailVerified;
 
     @JsonBackReference

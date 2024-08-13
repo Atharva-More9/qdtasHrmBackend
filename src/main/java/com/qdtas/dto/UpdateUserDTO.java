@@ -16,7 +16,7 @@ import java.util.Set;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class UpdateUserDTO {
+public class    UpdateUserDTO {
 
     private String userName;
 

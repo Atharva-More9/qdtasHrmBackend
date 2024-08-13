@@ -29,7 +29,7 @@ public class DepartmentServiceImpl implements DepartmentService {
 
     @Override
     public Department getById(long deptId) {
-        return drp.findById(deptId).orElseThrow(()-> new ResourceNotFoundException("Department","department_id",String.valueOf(deptId)));
+        return drp.findById(deptId).orElseThrow(()-> new ResourceNotFoundException("Department", "department_id", String.valueOf(deptId)));
     }
 
     @Override
