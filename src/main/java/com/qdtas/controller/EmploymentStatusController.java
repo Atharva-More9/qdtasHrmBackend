@@ -17,7 +17,7 @@ import java.util.List;
 
 @PreAuthorize("hasRole('ADMIN')")
 @RestController
-@RequestMapping
+@RequestMapping("/employment")
 @Tag(name = "8. EmploymentStatus")
 @CrossOrigin
 public class EmploymentStatusController {

@@ -25,19 +25,19 @@ public class EmploymentStatusServiceImpl implements EmploymentStatusService {
     }
 
     @Override
-    public EmploymentStatus updateById(Long id, EmploymentStatus employmentStatus) {
+    public EmploymentStatus updateById(long id, EmploymentStatus employmentStatus) {
         EmploymentStatus oldEmploymentStatus = employmentStatusRepository.findById(id).get();
         oldEmploymentStatus.setEmploymentStatusId(employmentStatus.getEmploymentStatusId());
         return employmentStatusRepository.save(oldEmploymentStatus);
     }
 
     @Override
-    public EmploymentStatus getById(Long id) {
+    public EmploymentStatus getById(long id) {
         return employmentStatusRepository.findById(id).orElseThrow(()->new ResourceNotFoundException("EmploymentStatus", "id", String.valueOf(id)));
     }
 
     @Override
-    public JsonMessage deleteById(Long id) {
+    public JsonMessage deleteById(long id) {
         try{
             employmentStatusRepository.deleteById(id);
             return new JsonMessage("EmploymentStatus deleted Successfully");

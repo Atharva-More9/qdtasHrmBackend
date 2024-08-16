@@ -17,8 +17,8 @@ import java.util.List;
 
 @PreAuthorize("hasRole('ADMIN')")
 @RestController
-@RequestMapping
-@Tag(name = "9. EmploymentStatus")
+@RequestMapping("/jobcategory")
+@Tag(name = "9. JobCategory")
 @CrossOrigin
 public class JobCategoryController {
 
@@ -41,13 +41,13 @@ public class JobCategoryController {
                     ),
             }
     )
-    @PostMapping("/add")
+    @PostMapping("/addJobCategory")
     public ResponseEntity<?> addJobCategory(@Valid @RequestBody JobCategory jobCategory) {
         return new ResponseEntity<>(jobCategoryService.createJobCategory(jobCategory), HttpStatus.CREATED);
     }
 
     @Hidden
-    @GetMapping("/getById/{id}")
+    @GetMapping("/getJobById/{id}")
     public ResponseEntity<?> getJobCategoryById(@PathVariable long id) {
         return new ResponseEntity<>(jobCategoryService.getById(id), HttpStatus.OK);
     }
@@ -69,7 +69,7 @@ public class JobCategoryController {
                     ),
             }
     )
-    @PostMapping("/updateById/{id}")
+    @PostMapping("/updateJobById/{id}")
     public ResponseEntity<?> updateById(@PathVariable long id, @Valid @RequestBody JobCategory jobCategory) {
         return new ResponseEntity<>(jobCategoryService.updateById(id, jobCategory), HttpStatus.OK);
     }
@@ -91,7 +91,7 @@ public class JobCategoryController {
                     ),
             }
     )
-    @PostMapping("/deleteById/{id}")
+    @PostMapping("/deleteJobById/{id}")
     public ResponseEntity<?> deleteById(@PathVariable long id) {
         return new ResponseEntity<>(jobCategoryService.deleteById(id), HttpStatus.OK);
     }
@@ -113,7 +113,7 @@ public class JobCategoryController {
                     ),
             }
     )
-    @GetMapping("/getAllJobs")
+    @GetMapping("/getAll")
     public ResponseEntity<?> getAllJobCategories(
             @RequestParam(value = "pgn", defaultValue = "1") int pgn,
             @RequestParam(value = "sz", defaultValue = "10") int size) {

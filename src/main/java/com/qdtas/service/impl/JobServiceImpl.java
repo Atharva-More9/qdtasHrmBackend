@@ -8,7 +8,6 @@ import com.qdtas.service.JobService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
-import org.springframework.data.querydsl.QPageRequest;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

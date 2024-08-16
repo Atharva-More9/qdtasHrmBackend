@@ -55,6 +55,8 @@ public class User{
 
     private String employmentStatus;
 
+    private String jobCategory;
+
     private Boolean emailVerified;
 
     @JsonBackReference

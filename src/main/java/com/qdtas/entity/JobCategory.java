@@ -22,11 +22,11 @@ public class JobCategory {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int JobCategoryId;
 
-    @Pattern(regexp = "^[a-zA-Z ]+$", message = "Only alphabets are allowed")
     @NotBlank(message = "Job name should not be blank")
+    @Pattern(regexp = "^[a-zA-Z ]+$", message = "Only alphabets are allowed")
     private String JobCategoryName;
 
     @JsonIgnore
-    @OneToMany(mappedBy = "employmentStatus", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "jobCategory", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private Set<User> JobCategories;
 }
