@@ -53,14 +53,18 @@ public class User{
     @Column(length = 100)
     private String designation;
 
-    private String employmentStatus;
+    @ManyToOne
+    @JoinColumn(name = "employee_status_id")
+    private EmploymentStatus employmentStatus;
 
-    private String jobCategory;
+    @ManyToOne
+    @JoinColumn(name = "job_category_id")
+    private JobCategory jobCategory;
 
     private Boolean emailVerified;
 
     @JsonBackReference
-    @ManyToMany(mappedBy = "team",cascade = CascadeType.ALL)
+    @ManyToMany(mappedBy = "team", cascade = CascadeType.ALL)
     private Set<Project> projects = new HashSet<>();
 
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")

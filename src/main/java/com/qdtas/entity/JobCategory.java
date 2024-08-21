@@ -1,5 +1,6 @@
 package com.qdtas.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
@@ -9,6 +10,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.HashSet;
 import java.util.Set;
 
 @Getter
@@ -20,13 +22,15 @@ public class JobCategory {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int JobCategoryId;
+    private int jobCategoryId;
 
-    @NotBlank(message = "Job name should not be blank")
     @Pattern(regexp = "^[a-zA-Z ]+$", message = "Only alphabets are allowed")
-    private String JobCategoryName;
+    @NotBlank(message = "Job name should not be blank")
+    @Column(name = "job_category_name", length = 100, nullable = false)
+    private String jobCategoryName;
 
-    @JsonIgnore
-    @OneToMany(mappedBy = "jobCategory", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private Set<User> JobCategories;
+    // Updated the field name from jobCategories to users for better clarity
+    @OneToMany(mappedBy = "jobCategory", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonBackReference  // To handle bidirectional relationship in JSON serialization
+    private Set<User> users = new HashSet<>();
 }
