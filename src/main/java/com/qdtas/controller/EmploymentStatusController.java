@@ -46,6 +46,22 @@ public class EmploymentStatusController {
         return new ResponseEntity<>(employmentStatusService.create(employmentStatus), HttpStatus.CREATED);
     }
 
+    @Operation(
+            description = "Get Employment Status By Id",
+            summary = "2.Get Employment Status By Id",
+            responses = {
+                    @ApiResponse(
+                            description = "Successful request",
+                            responseCode = "200",
+                            content = @io.swagger.v3.oas.annotations.media.Content
+                    ),
+                    @io.swagger.v3.oas.annotations.responses.ApiResponse(
+                            description = "Bad Request",
+                            responseCode = "400",
+                            content = @io.swagger.v3.oas.annotations.media.Content
+                    ),
+            }
+    )
     @GetMapping("/getById/{id}")
     public ResponseEntity<?> getById(@PathVariable long id) {
         return new ResponseEntity<>(employmentStatusService.getById(id), HttpStatus.OK);

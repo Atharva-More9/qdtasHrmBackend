@@ -50,6 +50,22 @@ public class JobController {
         return new ResponseEntity<>(jobService.create(job), HttpStatus.CREATED);
     }
 
+    @Operation(
+            description = "Get Job By Id",
+            summary = "2.Get Job By Id",
+            responses = {
+                    @ApiResponse(
+                            description = "Successful request",
+                            responseCode = "200",
+                            content = @io.swagger.v3.oas.annotations.media.Content
+                    ),
+                    @io.swagger.v3.oas.annotations.responses.ApiResponse(
+                            description = "Bad Request",
+                            responseCode = "400",
+                            content = @io.swagger.v3.oas.annotations.media.Content
+                    ),
+            }
+    )
     @GetMapping("/getById/{jobId}")
     public ResponseEntity<?> get(@PathVariable long jobId) {
         return new ResponseEntity<>(jobService.getById(jobId), HttpStatus.OK);

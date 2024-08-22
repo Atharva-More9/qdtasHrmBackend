@@ -26,7 +26,7 @@ public class JobCategoryController {
     private JobCategoryService jobCategoryService;
 
     @Operation(
-            description = "Employment Status creation ex.Officials and Managers, Professionals, etc.",
+            description = "Job Category creation ex.Officials and Managers, Professionals, etc.",
             summary = "1.Create new Job Category",
             responses = {
                     @ApiResponse(
@@ -46,6 +46,22 @@ public class JobCategoryController {
         return new ResponseEntity<>(jobCategoryService.createJobCategory(jobCategory), HttpStatus.CREATED);
     }
 
+    @Operation(
+            description = "Get Job Category By Id",
+            summary = "2.Get Job Category By Id",
+            responses = {
+                    @ApiResponse(
+                            description = "Successful request",
+                            responseCode = "200",
+                            content = @io.swagger.v3.oas.annotations.media.Content
+                    ),
+                    @io.swagger.v3.oas.annotations.responses.ApiResponse(
+                            description = "Bad Request",
+                            responseCode = "400",
+                            content = @io.swagger.v3.oas.annotations.media.Content
+                    ),
+            }
+    )
     @GetMapping("/getJobById/{id}")
     public ResponseEntity<?> getJobCategoryById(@PathVariable long id) {
         return new ResponseEntity<>(jobCategoryService.getById(id), HttpStatus.OK);
