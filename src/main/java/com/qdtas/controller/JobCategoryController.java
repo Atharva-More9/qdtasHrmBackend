@@ -46,7 +46,6 @@ public class JobCategoryController {
         return new ResponseEntity<>(jobCategoryService.createJobCategory(jobCategory), HttpStatus.CREATED);
     }
 
-    @Hidden
     @GetMapping("/getJobById/{id}")
     public ResponseEntity<?> getJobCategoryById(@PathVariable long id) {
         return new ResponseEntity<>(jobCategoryService.getById(id), HttpStatus.OK);

@@ -50,7 +50,6 @@ public class JobController {
         return new ResponseEntity<>(jobService.create(job), HttpStatus.CREATED);
     }
 
-    @Hidden
     @GetMapping("/getById/{jobId}")
     public ResponseEntity<?> get(@PathVariable long jobId) {
         return new ResponseEntity<>(jobService.getById(jobId), HttpStatus.OK);

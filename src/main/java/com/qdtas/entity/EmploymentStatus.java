@@ -1,7 +1,6 @@
 package com.qdtas.entity;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
@@ -10,7 +9,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.util.HashSet;
 import java.util.Set;
 
 @Getter
@@ -30,5 +28,5 @@ public class EmploymentStatus {
 
     @OneToMany(mappedBy = "employmentStatus", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JsonBackReference  // To handle bidirectional relationship in JSON serialization
-    private Set<User> users = new HashSet<>();
+    private Set<User> user;
 }

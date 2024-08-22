@@ -46,7 +46,6 @@ public class EmploymentStatusController {
         return new ResponseEntity<>(employmentStatusService.create(employmentStatus), HttpStatus.CREATED);
     }
 
-    @Hidden
     @GetMapping("/getById/{id}")
     public ResponseEntity<?> getById(@PathVariable long id) {
         return new ResponseEntity<>(employmentStatusService.getById(id), HttpStatus.OK);
