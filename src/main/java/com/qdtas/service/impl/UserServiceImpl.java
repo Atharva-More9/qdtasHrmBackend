@@ -117,6 +117,8 @@ public class UserServiceImpl implements UserService {
             u.setRole(rdt.getRole());
             u.setPhoneNumber(rdt.getPhoneNumber());
             u.setDesignation(rdt.getDesignation());
+            u.setJobCategory(rdt.getJobCategory());
+            u.setEmploymentStatus(rdt.getEmploymentStatus());
             u.setBirthDate(rdt.getBirthDate());
             u.setEmailVerified(false);
             savedU = urp.save(u);
