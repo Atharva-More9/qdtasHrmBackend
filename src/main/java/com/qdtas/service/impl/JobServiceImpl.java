@@ -28,6 +28,7 @@ public class JobServiceImpl implements JobService {
     public Job updateById(long jobId, Job job) {
         Job oldJob = jobRepository.findById(jobId).get();
         oldJob.setJobName(job.getJobName());
+        oldJob.setJobDescription(job.getJobDescription());
         return jobRepository.save(oldJob);
     }
 

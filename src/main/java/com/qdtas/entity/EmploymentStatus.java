@@ -1,6 +1,7 @@
 package com.qdtas.entity;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
@@ -22,11 +23,10 @@ public class EmploymentStatus {
     private int employmentStatusId;
 
     @Pattern(regexp = "^[a-zA-Z ]+$", message = "Only alphabets are allowed")
-    @NotBlank(message = "Job name should not be blank")
-    @Column(name = "employment_status_name", length = 100, nullable = false)
+    @NotBlank(message = "Job Description should not be blank")
     private String employmentStatusName;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "employmentStatus", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    @JsonBackReference  // To handle bidirectional relationship in JSON serialization
-    private Set<User> user;
+   private Set<User> employmentStatusUsers;
 }

@@ -53,13 +53,11 @@ public class User{
     @Column(length = 100)
     private String designation;
 
-    @ManyToOne
-    @JoinColumn(name = "employee_status_id")
-    private EmploymentStatus employmentStatus;
+    @Column(length = 100)
+    private String employmentStatus;
 
-    @ManyToOne
-    @JoinColumn(name = "job_category_id")
-    private JobCategory jobCategory;
+    @Column(length = 100)
+    private String jobCategory;
 
     private Boolean emailVerified;
 

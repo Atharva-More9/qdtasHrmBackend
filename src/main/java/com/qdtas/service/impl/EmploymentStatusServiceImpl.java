@@ -26,8 +26,10 @@ public class EmploymentStatusServiceImpl implements EmploymentStatusService {
 
     @Override
     public EmploymentStatus updateById(long id, EmploymentStatus employmentStatus) {
-        EmploymentStatus oldEmploymentStatus = employmentStatusRepository.findById(id).get();
-        oldEmploymentStatus.setEmploymentStatusId(employmentStatus.getEmploymentStatusId());
+        EmploymentStatus oldEmploymentStatus = employmentStatusRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("EmploymentStatus", "id", String.valueOf(id)));
+        oldEmploymentStatus.setEmploymentStatusName(employmentStatus.getEmploymentStatusName());
+        // Update only the fields that need to be changed
         return employmentStatusRepository.save(oldEmploymentStatus);
     }
 

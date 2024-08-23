@@ -25,12 +25,10 @@ public class JobCategory {
     private int jobCategoryId;
 
     @Pattern(regexp = "^[a-zA-Z ]+$", message = "Only alphabets are allowed")
-    @NotBlank(message = "Job name should not be blank")
-    @Column(name = "job_category_name", length = 100, nullable = false)
+    @NotBlank(message = "Job Description should not be blank")
     private String jobCategoryName;
 
-    // Updated the field name from jobCategories to users for better clarity
-    @OneToMany(mappedBy = "jobCategory", cascade = CascadeType.ALL, orphanRemoval = true)
-    @JsonBackReference  // To handle bidirectional relationship in JSON serialization
-    private Set<User> users = new HashSet<>();
+    @JsonIgnore
+    @OneToMany(mappedBy = "jobCategory", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+   private Set<User> jobCategoryUsers;
 }

@@ -89,8 +89,8 @@ public class JobController {
             }
     )
     @PostMapping("/updateById/{jobId}")
-    public ResponseEntity<?> update(@PathVariable long jobId, @Valid @RequestBody Job jobName) {
-        return new ResponseEntity<>(jobService.updateById(jobId, jobName), HttpStatus.OK);
+    public ResponseEntity<?> update(@PathVariable long jobId, @Valid @RequestBody Job job) {
+        return new ResponseEntity<>(jobService.updateById(jobId, job), HttpStatus.OK);
     }
 
     @Operation(

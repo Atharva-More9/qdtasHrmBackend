@@ -26,8 +26,12 @@ public class JobCategoryServiceImpl implements JobCategoryService {
 
     @Override
     public JobCategory updateById(Long id, JobCategory jobCategory) {
-        JobCategory oldJobCategory = jobCategoryRepository.findById(id).get();
-        oldJobCategory.setJobCategoryId(jobCategory.getJobCategoryId());
+        JobCategory oldJobCategory = jobCategoryRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("JobCategory", "id", String.valueOf(id)));
+
+        // Update only the fields that need to be changed
+        oldJobCategory.setJobCategoryName(jobCategory.getJobCategoryName());
+        // Add more fields if needed
         return jobCategoryRepository.save(oldJobCategory);
     }
 
