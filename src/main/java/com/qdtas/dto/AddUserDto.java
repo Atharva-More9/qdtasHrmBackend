@@ -60,6 +60,12 @@ public class AddUserDto {
     @Pattern(regexp = "^[a-zA-Z]+\\.?[a-zA-Z]*$", message = "Only alphabets and one (.) is allowed")
     private String designation;
 
+    @Pattern(regexp = "^[a-zA-Z ]+$", message = "Only alphabets and spaces are allowed")
+    private String jobCategory;
+
+    @Pattern(regexp = "^[a-zA-Z ]+$", message = "Only alphabets and spaces are allowed")
+    private String employmentStatus;
+
     @NotNull(message = "Please provide a valid birthDate")
     @Past(message = "Birthdate must be in the past")
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
