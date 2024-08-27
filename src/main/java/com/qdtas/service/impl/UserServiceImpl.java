@@ -4,16 +4,10 @@ import com.qdtas.dto.AddUserDto;
 import com.qdtas.dto.JwtResponse;
 import com.qdtas.dto.LoginDTO;
 import com.qdtas.dto.UpdateUserDTO;
-import com.qdtas.entity.Department;
-import com.qdtas.entity.EmailVerification;
-import com.qdtas.entity.Task;
-import com.qdtas.entity.User;
+import com.qdtas.entity.*;
 import com.qdtas.exception.EmailAlreadyRegisteredException;
 import com.qdtas.exception.ResourceNotFoundException;
-import com.qdtas.repository.DepartmentRepository;
-import com.qdtas.repository.EmailServiceRepository;
-import com.qdtas.repository.ProjectRepository;
-import com.qdtas.repository.UserRepository;
+import com.qdtas.repository.*;
 import com.qdtas.security.CustomUserDetails;
 import com.qdtas.security.JwtHelper;
 import com.qdtas.service.TaskService;
@@ -54,6 +48,11 @@ public class UserServiceImpl implements UserService {
     private AuthenticationManager manager;
     @Autowired
     private DepartmentRepository drp;
+    @Autowired
+    private EmploymentStatusRepository esrp;
+
+    @Autowired
+    private JobCategoryRepository jrp;
 
     @Autowired
     private ProjectRepository prp;
@@ -99,8 +98,12 @@ public class UserServiceImpl implements UserService {
         } catch (ResourceNotFoundException e) {
             User u = new User();
             Department department=new Department();
+            JobCategory jobCategory =new JobCategory();
+            EmploymentStatus employmentStatus =new EmploymentStatus();
             try{
                 department = drp.findById(rdt.getDeptId()).orElseThrow(() -> new ResourceNotFoundException("Department","department_id",String.valueOf(rdt.getDeptId())));
+                jobCategory = jrp.findById(rdt.getJobCategoryId()).orElseThrow(() -> new ResourceNotFoundException("Department","department_id",String.valueOf(rdt.getJobCategoryId())));
+                employmentStatus = esrp.findById(rdt.getEmploymentStatusId()).orElseThrow(() -> new ResourceNotFoundException("Department","department_id",String.valueOf(rdt.getEmploymentStatusId())));
             }
             catch(Exception exception){
                 department=new Department(0,"NA",new HashSet<>());
@@ -117,8 +120,8 @@ public class UserServiceImpl implements UserService {
             u.setRole(rdt.getRole());
             u.setPhoneNumber(rdt.getPhoneNumber());
             u.setDesignation(rdt.getDesignation());
-            u.setJobCategory(rdt.getJobCategory());
-            u.setEmploymentStatus(rdt.getEmploymentStatus());
+            u.setJobCategoryId(jobCategory);
+            u.setEmploymentStatusId(employmentStatus);
             u.setBirthDate(rdt.getBirthDate());
             u.setEmailVerified(false);
             savedU = urp.save(u);

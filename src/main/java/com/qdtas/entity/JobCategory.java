@@ -29,6 +29,6 @@ public class JobCategory {
     private String jobCategoryName;
 
     @JsonIgnore
-    @OneToMany(mappedBy = "jobCategory", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "jobCategoryId", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
    private Set<User> jobCategoryUsers;
 }

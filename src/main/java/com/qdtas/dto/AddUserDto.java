@@ -60,11 +60,13 @@ public class AddUserDto {
     @Pattern(regexp = "^[a-zA-Z]+\\.?[a-zA-Z]*$", message = "Only alphabets and one (.) is allowed")
     private String designation;
 
-    @Pattern(regexp = "^[a-zA-Z ]+$", message = "Only alphabets and spaces are allowed")
-    private String jobCategory;
+    @NonZero
+    @NotNull(message = "job Category ID cannot be null")
+    private Long jobCategoryId;
 
-    @Pattern(regexp = "^[a-zA-Z ]+$", message = "Only alphabets and spaces are allowed")
-    private String employmentStatus;
+    @NonZero
+    @NotNull(message = "Employment Status ID cannot be null")
+    private Long employmentStatusId;
 
     @NotNull(message = "Please provide a valid birthDate")
     @Past(message = "Birthdate must be in the past")
