@@ -40,7 +40,11 @@ public class    UpdateUserDTO {
 
     private String address;
 
-    private String designation;
+    private long jobId;
+
+    private long jobCategoryId;
+
+    private long employmentStatusId;
 
     private Boolean emailVerified;
 

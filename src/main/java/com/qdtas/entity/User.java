@@ -50,8 +50,9 @@ public class User{
     @Column(length = 150)
     private String address;
 
-    @Column(length = 100)
-    private String designation;
+    @ManyToOne
+    @JoinColumn(name = "job_id")
+    private Job jobId;
 
     @ManyToOne
     @JoinColumn(name = "employee_status_id")

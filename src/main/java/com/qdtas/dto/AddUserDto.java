@@ -57,8 +57,9 @@ public class AddUserDto {
     @Pattern(regexp = "^[0-9]{10}$", message = "Please enter exactly 10 digits")
     private String phoneNumber;
 
-    @Pattern(regexp = "^[a-zA-Z]+\\.?[a-zA-Z]*$", message = "Only alphabets and one (.) is allowed")
-    private String designation;
+    @NonZero
+    @NotNull(message = "job ID cannot be null")
+    private Long jobId;
 
     @NonZero
     @NotNull(message = "job Category ID cannot be null")

@@ -55,6 +55,9 @@ public class UserServiceImpl implements UserService {
     private JobCategoryRepository jrp;
 
     @Autowired
+    private JobRepository jobrp;
+
+    @Autowired
     private ProjectRepository prp;
     @Autowired
     private UserRepository userRepository;
@@ -100,10 +103,12 @@ public class UserServiceImpl implements UserService {
             Department department=new Department();
             JobCategory jobCategory =new JobCategory();
             EmploymentStatus employmentStatus =new EmploymentStatus();
+            Job job = new Job();
             try{
                 department = drp.findById(rdt.getDeptId()).orElseThrow(() -> new ResourceNotFoundException("Department","department_id",String.valueOf(rdt.getDeptId())));
-                jobCategory = jrp.findById(rdt.getJobCategoryId()).orElseThrow(() -> new ResourceNotFoundException("Department","department_id",String.valueOf(rdt.getJobCategoryId())));
-                employmentStatus = esrp.findById(rdt.getEmploymentStatusId()).orElseThrow(() -> new ResourceNotFoundException("Department","department_id",String.valueOf(rdt.getEmploymentStatusId())));
+                jobCategory = jrp.findById(rdt.getJobCategoryId()).orElseThrow(() -> new ResourceNotFoundException("JobCategory","jobCategory_id",String.valueOf(rdt.getJobCategoryId())));
+                employmentStatus = esrp.findById(rdt.getEmploymentStatusId()).orElseThrow(() -> new ResourceNotFoundException("EmploymentStatus","employmentStatus_id",String.valueOf(rdt.getEmploymentStatusId())));
+                job = jobrp.findById(rdt.getJobId()).orElseThrow(() -> new ResourceNotFoundException("Job","job_id",String.valueOf(rdt.getJobId())));
             }
             catch(Exception exception){
                 department=new Department(0,"NA",new HashSet<>());
@@ -119,7 +124,7 @@ public class UserServiceImpl implements UserService {
             u.setJoinDate(new Date());
             u.setRole(rdt.getRole());
             u.setPhoneNumber(rdt.getPhoneNumber());
-            u.setDesignation(rdt.getDesignation());
+            u.setJobId(job);
             u.setJobCategoryId(jobCategory);
             u.setEmploymentStatusId(employmentStatus);
             u.setBirthDate(rdt.getBirthDate());
@@ -262,8 +267,15 @@ public class UserServiceImpl implements UserService {
             }
         } else if (ud.getGender() != null) {
             u.setGender(ud.getGender());
-        } else if (ud.getDesignation() != null) {
-            u.setDesignation(ud.getDesignation());
+        } else if (ud.getJobId() != 0) {
+            Job byId = jobrp.findById(ud.getJobId()).orElseThrow(() -> new ResourceNotFoundException("Job","job_id",String.valueOf(ud.getJobId())));
+            u.setJobId(byId);
+        } else if (ud.getEmploymentStatusId() != 0){
+            EmploymentStatus byId = esrp.findById(ud.getEmploymentStatusId()).orElseThrow(() -> new ResourceNotFoundException("EmploymentStatus","employmentStatus_id",String.valueOf(ud.getEmploymentStatusId())));
+            u.setEmploymentStatusId(byId);
+        } else if (ud.getJobCategoryId() != 0) {
+            JobCategory byId = jrp.findById(ud.getJobCategoryId()).orElseThrow(() -> new ResourceNotFoundException("JobCategory","jobCategory_id",String.valueOf(ud.getJobCategoryId())));
+            u.setJobCategoryId(byId);
         } else if (ud.getRole() != null) {
             u.setRole(ud.getRole());
         } else if (ud.getBirthDate() != null) {

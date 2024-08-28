@@ -32,7 +32,7 @@ public class Job {
     private String jobDescription;
 
     @JsonIgnore
-    @OneToMany(mappedBy = "designation", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "jobId", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private Set<User> jobs;
 
 }
