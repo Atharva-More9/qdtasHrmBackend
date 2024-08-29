@@ -16,7 +16,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/generalinfo")
 @Tag(name = "10. General_Information")
-@CrossOrigin
+@CrossOrigin(origins = "*")
 public class GeneralInformationController {
 
     @Autowired
