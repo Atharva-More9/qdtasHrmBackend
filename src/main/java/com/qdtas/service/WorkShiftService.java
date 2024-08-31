@@ -3,6 +3,7 @@ package com.qdtas.service;
 import com.qdtas.dto.JsonMessage;
 import com.qdtas.entity.WorkShift;
 
+import java.time.LocalTime;
 import java.util.List;
 
 public interface WorkShiftService {
@@ -11,7 +12,7 @@ public interface WorkShiftService {
 
     public WorkShift getWorkShiftById(long id);
 
-    public WorkShift updateWorkShiftById(long id, WorkShift workShift);
+    public WorkShift updateWorkShiftById(long workShiftId, String workShiftName, LocalTime startTime, LocalTime endTime);
 
     public JsonMessage deleteWorkShiftById(long id);
 

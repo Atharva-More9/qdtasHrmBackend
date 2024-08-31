@@ -10,6 +10,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -30,9 +31,12 @@ public class WorkShiftServiceImpl implements WorkShiftService {
     }
 
     @Override
-    public WorkShift updateWorkShiftById(long id, WorkShift workShift) {
-        WorkShift w = wsr.getById(id);
-        w.setWorkShiftName(workShift.getWorkShiftName());
+    public WorkShift updateWorkShiftById(long id, String workShiftName, LocalTime startTime, LocalTime endTime) {
+        WorkShift w = wsr.findById(id).orElseThrow(() -> new ResourceNotFoundException("WorkShift", "id", String.valueOf(id)));
+        w.setWorkShiftName(workShiftName);
+        w.setStartTime(startTime);
+        w.setEndTime(endTime);
+
         return wsr.save(w);
     }
 

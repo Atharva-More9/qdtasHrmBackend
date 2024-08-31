@@ -85,8 +85,9 @@ public class WorkShiftController {
             }
     )
     @PostMapping("/updateById/{id}")
-    public ResponseEntity<?> updateWorkShiftById(@PathVariable long id, @Valid @RequestBody WorkShift workShift) {
-        return new ResponseEntity<>(wss.updateWorkShiftById(id, workShift), HttpStatus.OK);
+    public ResponseEntity<?> updateWorkShiftById(@PathVariable long id, @Valid @RequestBody WorkShift workShiftDetails) {
+        WorkShift updatedWorkShift = wss.updateWorkShiftById(id, workShiftDetails.getWorkShiftName(), workShiftDetails.getStartTime(), workShiftDetails.getEndTime());
+        return new ResponseEntity<>(updatedWorkShift, HttpStatus.OK);
     }
 
     @Operation(
