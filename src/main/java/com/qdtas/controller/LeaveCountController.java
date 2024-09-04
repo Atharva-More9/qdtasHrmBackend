@@ -1,0 +1,47 @@
+package com.qdtas.controller;
+
+import com.qdtas.entity.LeaveCount;
+import com.qdtas.service.LeaveCountService;
+import io.swagger.v3.oas.annotations.tags.Tag;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+
+@PreAuthorize("hasRole('ADMIN')")
+@RestController
+@RequestMapping("/leavecount")
+@CrossOrigin
+public class LeaveCountController {
+
+    @Autowired
+    private LeaveCountService leaveCountService;
+
+    @PostMapping("/add")
+    public ResponseEntity<LeaveCount> addLeave(@RequestBody LeaveCount leaveCount) {
+        return new ResponseEntity<>(leaveCountService.addLeaveCount(leaveCount), HttpStatus.CREATED);
+    }
+
+    @PostMapping("/update")
+    public ResponseEntity<LeaveCount> updateLeave(@RequestParam long id, @RequestBody LeaveCount leaveCount) {
+        return new ResponseEntity<>(leaveCountService.updateLeaveCount(id, leaveCount), HttpStatus.OK);
+    }
+
+    @GetMapping("/totalleaves")
+    public ResponseEntity<LeaveCount> getLeaveCount() {
+        return new ResponseEntity<>(leaveCountService.getAllLeaveCount(), HttpStatus.OK);
+    }
+
+    @GetMapping("/casualleaves")
+    public ResponseEntity<LeaveCount> getCasualleaveCount() {
+        return new ResponseEntity<>(leaveCountService.getCasualLeaveCount(), HttpStatus.OK);
+    }
+
+    @GetMapping("/sickleaves")
+    public ResponseEntity<LeaveCount> getSickleaveCount() {
+        return new ResponseEntity<>(leaveCountService.getSickLeaveCount(), HttpStatus.OK);
+    }
+}
