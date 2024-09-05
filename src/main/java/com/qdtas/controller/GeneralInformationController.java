@@ -25,10 +25,10 @@ public class GeneralInformationController {
     @Autowired
     private GeneralInformationService generalInformationService;
 
-    @PostMapping("/add")
-    public ResponseEntity<GeneralInformation> addGeneralInformation(@Valid @RequestBody GeneralInformation generalInformation) {
-        return new ResponseEntity<>(generalInformationService.addGeneralInformation(generalInformation), HttpStatus.CREATED);
-    }
+//    @PostMapping("/add")
+//    public ResponseEntity<GeneralInformation> addGeneralInformation(@Valid @RequestBody GeneralInformation generalInformation) {
+//        return new ResponseEntity<>(generalInformationService.addGeneralInformation(generalInformation), HttpStatus.CREATED);
+//    }
 
     @GetMapping("/getAllInfo")
     public ResponseEntity<?> getGeneralInformation() {
