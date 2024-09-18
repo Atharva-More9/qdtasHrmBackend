@@ -48,6 +48,7 @@ public interface UserService {
 
     public double calculateEmployeePerformance(long userId, LocalDate startDate, LocalDate endDate);
 
+    public Integer getTotalLeaves(Long userId);
 
 
 }

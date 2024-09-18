@@ -334,7 +334,27 @@ public class UserController {
         }
     }
 
-
+    @Operation(
+            summary = "Get Total Leaves",
+            description = "Retrieve the total leaves for a user by their ID",
+            responses = {
+                    @ApiResponse(
+                            description = "Total Leaves Retrieved", responseCode = "200", content = @io.swagger.v3.oas.annotations.media.Content
+                    ),
+                    @ApiResponse(
+                            description = "User Not Found", responseCode = "404", content = @io.swagger.v3.oas.annotations.media.Content
+                    )
+            }
+    )
+    @GetMapping("/{userId}/totalLeaves")
+    public ResponseEntity<?> getTotalLeaves(@PathVariable("userId") Long userId) {
+        try {
+            Integer totalLeaves = ussr.getTotalLeaves(userId);
+            return new ResponseEntity<>(totalLeaves, HttpStatus.OK);
+        } catch (ResourceNotFoundException e) {
+            return new ResponseEntity<>(new JsonMessage(e.getMessage()), HttpStatus.NOT_FOUND);
+        }
+    }
 
 //    @GetMapping("/calculate-performance")
 //    public ResponseEntity<?> calculatePerformance(
