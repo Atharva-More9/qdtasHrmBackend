@@ -62,7 +62,6 @@ public class User{
     @JoinColumn(name = "job_category_id")
     private JobCategory jobCategoryId;
 
-    @Column(nullable = false)
     private int totalLeaves = 20; // Default value for all new users
 
     private Boolean emailVerified;
