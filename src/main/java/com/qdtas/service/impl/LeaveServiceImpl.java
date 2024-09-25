@@ -170,7 +170,7 @@ public Leave approveLeaveRequest(Long id) {
     // Calculate the number of days between startDate and endDate
     LocalDate startDate = leaveRequest.getStartDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
     LocalDate endDate = leaveRequest.getEndDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
-    long daysBetween = ChronoUnit.DAYS.between(startDate, endDate) + 1; // Include both start and end dates
+    long daysBetween = ChronoUnit.DAYS.between(startDate, endDate); // Include both start and end dates
 
     // Adjust the total leaves based on the approved leave request
     leaveRequest.getEmployee().setTotalLeaves(leaveRequest.getEmployee().getTotalLeaves() - (int) daysBetween );
