@@ -91,6 +91,13 @@
         }
 
         @Override
+        public void updateTotalLeaves(Long userId, int newTotalLeaves) {
+            User user = getById(userId);
+            user.setTotalLeaves(newTotalLeaves);
+            urp.save(user); // Save the user with updated total leaves
+        }
+
+        @Override
         public User create(AddUserDto rdt) {
             User savedU = null;
             try {

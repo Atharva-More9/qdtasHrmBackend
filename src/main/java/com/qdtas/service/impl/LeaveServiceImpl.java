@@ -69,7 +69,50 @@ public class LeaveServiceImpl implements LeaveService {
         return false;
     }
 
-    @Override
+//    @Override
+//    public Leave createLeaveRequest(long empId, LeaveDTO leaveRequest) {
+//        // Check for overlapping approved leaves
+//        if (hasOverlappingApprovedLeave(empId, leaveRequest.getStartDate(), leaveRequest.getEndDate())) {
+//            throw new RuntimeException("The leave request overlaps with an approved leave.");
+//        }
+//
+//        Leave l = new Leave();
+//        l.setStatus(LeaveStatus.PENDING.name());
+//        l.setReason(leaveRequest.getReason());
+//        l.setType(leaveRequest.getType());
+//
+//        // Convert start and end dates to avoid timezone issues
+//        LocalDate startDate = leaveRequest.getStartDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+//        LocalDate endDate = leaveRequest.getEndDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+//
+//        l.setStartDate(Date.from(startDate.atStartOfDay(ZoneId.systemDefault()).toInstant()));
+//        l.setEndDate(Date.from(endDate.atStartOfDay(ZoneId.systemDefault()).toInstant()));
+//
+//        User u = usr.getById(empId);
+//        l.setEmployee(u);
+//
+//        // Adjust the leave count immediately after the request is made (deduct leaves)
+//        leaveCountService.adjustLeaveCount(empId, leaveRequest.getTotalLeaves(), false);
+//
+//        // Save the leave request
+//        Leave savedLeave = leaveRequestRepository.save(l);
+//
+//        // Notify managers
+//        Set<Project> projects = u.getProjects();
+//        Set<User> managerList = new HashSet<>();
+//        for (Project p : projects) {
+//            managerList.addAll(p.getManagers());
+//        }
+//        List<String> mEmails = new ArrayList<>();
+//        for (User m : managerList) {
+//            mEmails.add(m.getEmail());
+//        }
+//        ems.sendLeaveRequestEmail(mEmails, savedLeave);
+//
+//        return savedLeave;
+//    }
+
+    // Example usage during leave creation
     public Leave createLeaveRequest(long empId, LeaveDTO leaveRequest) {
         // Check for overlapping approved leaves
         if (hasOverlappingApprovedLeave(empId, leaveRequest.getStartDate(), leaveRequest.getEndDate())) {
@@ -81,7 +124,6 @@ public class LeaveServiceImpl implements LeaveService {
         l.setReason(leaveRequest.getReason());
         l.setType(leaveRequest.getType());
 
-        // Convert start and end dates to avoid timezone issues
         LocalDate startDate = leaveRequest.getStartDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
         LocalDate endDate = leaveRequest.getEndDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
 
@@ -91,8 +133,12 @@ public class LeaveServiceImpl implements LeaveService {
         User u = usr.getById(empId);
         l.setEmployee(u);
 
-        // Adjust the leave count immediately after the request is made (deduct leaves)
-        leaveCountService.adjustLeaveCount(empId, leaveRequest.getTotalLeaves(), false);
+        // Deduct the leaves from the user's total leaves
+        int totalLeaves = leaveRequest.getTotalLeaves(); // Adjust based on request
+        int remainingLeaves = u.getTotalLeaves() - totalLeaves;
+
+        // Update user's total leaves
+        usr.updateTotalLeaves(empId, remainingLeaves);
 
         // Save the leave request
         Leave savedLeave = leaveRequestRepository.save(l);
@@ -111,6 +157,7 @@ public class LeaveServiceImpl implements LeaveService {
 
         return savedLeave;
     }
+
 
 
     public Leave updateLeaveRequest(Long id, LeaveDTO updatedLeaveRequest) {
