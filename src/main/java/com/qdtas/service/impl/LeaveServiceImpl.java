@@ -23,6 +23,8 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.time.temporal.ChronoUnit;
+
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -165,10 +167,13 @@ public Leave approveLeaveRequest(Long id) {
 
     leaveRequest.setStatus(LeaveStatus.APPROVED.name());
 
+    // Calculate the number of days between startDate and endDate
+    LocalDate startDate = leaveRequest.getStartDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+    LocalDate endDate = leaveRequest.getEndDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+    long daysBetween = ChronoUnit.DAYS.between(startDate, endDate) + 1; // Include both start and end dates
+
     // Adjust the total leaves based on the approved leave request
-    int totalLeaves = leaveRequest.getTotalLeaves();
-    // Assuming you have a method to get the user's current total leaves
-    leaveRequest.getEmployee().setTotalLeaves(leaveRequest.getEmployee().getTotalLeaves() - totalLeaves);
+    leaveRequest.getEmployee().setTotalLeaves((int) daysBetween - leaveRequest.getEmployee().getTotalLeaves());
 
     leaveRequestRepository.save(leaveRequest); // Save the updated leave request
     return leaveRequest;
