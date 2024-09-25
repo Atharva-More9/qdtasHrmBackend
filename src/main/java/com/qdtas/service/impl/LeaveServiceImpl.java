@@ -133,12 +133,12 @@ public class LeaveServiceImpl implements LeaveService {
         User u = usr.getById(empId);
         l.setEmployee(u);
 
-        // Deduct the leaves from the user's total leaves
-        int totalLeaves = leaveRequest.getTotalLeaves(); // Adjust based on request
-        int remainingLeaves = u.getTotalLeaves() - totalLeaves;
+//        // Deduct the leaves from the user's total leaves
+//        int totalLeaves = leaveRequest.getTotalLeaves(); // Adjust based on request
+//        int remainingLeaves = u.getTotalLeaves() - totalLeaves;
 
         // Update user's total leaves
-        usr.updateTotalLeaves(empId, remainingLeaves);
+        usr.updateTotalLeaves(empId, u.getTotalLeaves());
 
         // Save the leave request
         Leave savedLeave = leaveRequestRepository.save(l);
