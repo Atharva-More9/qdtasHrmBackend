@@ -131,19 +131,48 @@ public class LeaveServiceImpl implements LeaveService {
         leaveRequestRepository.delete(l);
     }
 
-    @PreAuthorize("hasRole('ADMIN')")
-    public Leave approveLeaveRequest(Long id) {
-        Leave leaveRequest = leaveRequestRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Leave request not found"));
+//    @PreAuthorize("hasRole('ADMIN')")
+//    public Leave approveLeaveRequest(Long id) {
+//        Leave leaveRequest = leaveRequestRepository.findById(id)
+//                .orElseThrow(() -> new RuntimeException("Leave request not found"));
+//
+//        leaveRequest.setStatus(LeaveStatus.APPROVED.name());
+//        Leave approvedLeave = leaveRequestRepository.save(leaveRequest);
+//
+//        // Adjust the leave count for the employee
+//        leaveCountService.adjustLeaveCount(leaveRequest.getEmployee().getUserId(), leaveRequest.getTotalLeaves(), true);
+//
+//        return approvedLeave;
+//    }
+//
+//    @PreAuthorize("hasRole('ADMIN')")
+//    public Leave rejectLeaveRequest(Long id) {
+//        Leave leaveRequest = leaveRequestRepository.findById(id)
+//                .orElseThrow(() -> new RuntimeException("Leave request not found"));
+//
+//        leaveRequest.setStatus(LeaveStatus.REJECTED.name());
+//        Leave rejectedLeave = leaveRequestRepository.save(leaveRequest);
+//
+//        // No adjustment to leave count since the leave is rejected
+//        // Optionally, log this action if needed
+//
+//        return rejectedLeave;
+//    }
+@PreAuthorize("hasRole('ADMIN')")
+public Leave approveLeaveRequest(Long id) {
+    Leave leaveRequest = leaveRequestRepository.findById(id)
+            .orElseThrow(() -> new RuntimeException("Leave request not found"));
 
-        leaveRequest.setStatus(LeaveStatus.APPROVED.name());
-        Leave approvedLeave = leaveRequestRepository.save(leaveRequest);
+    leaveRequest.setStatus(LeaveStatus.APPROVED.name());
 
-        // Adjust the leave count for the employee
-        leaveCountService.adjustLeaveCount(leaveRequest.getEmployee().getUserId(), leaveRequest.getTotalLeaves(), true);
+    // Adjust the total leaves based on the approved leave request
+    int totalLeaves = leaveRequest.getTotalLeaves();
+    // Assuming you have a method to get the user's current total leaves
+    leaveRequest.getEmployee().setTotalLeaves(leaveRequest.getEmployee().getTotalLeaves() - totalLeaves);
 
-        return approvedLeave;
-    }
+    leaveRequestRepository.save(leaveRequest); // Save the updated leave request
+    return leaveRequest;
+}
 
     @PreAuthorize("hasRole('ADMIN')")
     public Leave rejectLeaveRequest(Long id) {
@@ -151,12 +180,10 @@ public class LeaveServiceImpl implements LeaveService {
                 .orElseThrow(() -> new RuntimeException("Leave request not found"));
 
         leaveRequest.setStatus(LeaveStatus.REJECTED.name());
-        Leave rejectedLeave = leaveRequestRepository.save(leaveRequest);
 
         // No adjustment to leave count since the leave is rejected
-        // Optionally, log this action if needed
-
-        return rejectedLeave;
+        leaveRequestRepository.save(leaveRequest); // Save the updated leave request
+        return leaveRequest;
     }
     @Override
     public int getLeaveCountByEmpId(Long id) {
