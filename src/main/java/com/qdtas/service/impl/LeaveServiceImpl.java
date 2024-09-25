@@ -173,7 +173,7 @@ public Leave approveLeaveRequest(Long id) {
     long daysBetween = ChronoUnit.DAYS.between(startDate, endDate) + 1; // Include both start and end dates
 
     // Adjust the total leaves based on the approved leave request
-    leaveRequest.getEmployee().setTotalLeaves((int) daysBetween - leaveRequest.getEmployee().getTotalLeaves());
+    leaveRequest.getEmployee().setTotalLeaves(leaveRequest.getEmployee().getTotalLeaves() - (int) daysBetween );
 
     leaveRequestRepository.save(leaveRequest); // Save the updated leave request
     return leaveRequest;
