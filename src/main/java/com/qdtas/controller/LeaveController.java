@@ -183,4 +183,27 @@ public class LeaveController {
         List<Leave> leaveByEmpId = leaveRequestService.getLeaveByEmpId(empId);
         return new ResponseEntity<>(leaveByEmpId , HttpStatus.OK);
     }
+
+    @Operation(
+            description = "Get Leave Count by Employee Id",
+            summary = "Get Leave Count by Employee Id",
+            responses = {
+                    @ApiResponse(
+                            description = "OK",
+                            responseCode = "200",
+                            content = @io.swagger.v3.oas.annotations.media.Content
+
+                    ),
+                    @ApiResponse(
+                            description = "Bad Request",
+                            responseCode = "400",
+                            content = @io.swagger.v3.oas.annotations.media.Content
+                    ),
+            }
+    )
+    @GetMapping("/total/{Id}")
+    public ResponseEntity<?> getTotalById(@PathVariable long Id){
+        int totalLeaves = leaveRequestService.getLeaveCountByEmpId(Id);
+        return new ResponseEntity<>(totalLeaves, HttpStatus.OK);
+    }
 }

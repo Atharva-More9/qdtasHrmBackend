@@ -19,4 +19,6 @@ public interface LeaveRepository extends JpaRepository<Leave, Long> {
             " %:empId% && status=%:name% ORDER BY start_date desc ", nativeQuery = true)
     List<Leave> findByEmployeeIdAndStatus(long empId, String name);
 
+    @Query(value = "SELECT SUM(total_leaves) FROM leave_request WHERE user_id = :empId", nativeQuery = true)
+    int getTotalLeavesByUserId(long empId);
 }

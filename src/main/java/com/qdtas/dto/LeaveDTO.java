@@ -38,4 +38,6 @@ public class LeaveDTO {
     private String reason;
     @Hidden
     private String status;
+
+    private int totalLeaves;
 }

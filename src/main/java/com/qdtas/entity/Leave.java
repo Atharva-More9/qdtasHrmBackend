@@ -40,5 +40,6 @@ public class Leave {
 
     private String status;
 
+    private int totalLeaves;
 
 }

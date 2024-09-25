@@ -4,13 +4,11 @@ import com.qdtas.entity.LeaveCount;
 
 public interface LeaveCountService {
 
-    public LeaveCount addLeaveCount(LeaveCount leaveCount);
+    LeaveCount addLeaveCount(LeaveCount leaveCount);
 
-    public LeaveCount updateLeaveCount(long id, LeaveCount leaveCount);
+    LeaveCount updateLeaveCount(long id, LeaveCount leaveCount);
 
-    public LeaveCount getAllLeaveCount();
+    LeaveCount getLeaveCountByUserId(long userId);
 
-    public LeaveCount getCasualLeaveCount();
-
-    public LeaveCount getSickLeaveCount();
+    void adjustLeaveCount(long userId, int leaveDays, boolean isApproved);
 }

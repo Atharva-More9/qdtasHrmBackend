@@ -30,18 +30,14 @@ public class LeaveCountController {
         return new ResponseEntity<>(leaveCountService.updateLeaveCount(id, leaveCount), HttpStatus.OK);
     }
 
-    @GetMapping("/totalleaves")
-    public ResponseEntity<LeaveCount> getLeaveCount() {
-        return new ResponseEntity<>(leaveCountService.getAllLeaveCount(), HttpStatus.OK);
+    @GetMapping("/total/{Id}")
+    public ResponseEntity<LeaveCount> getLeaveCountByUserId(@PathVariable long Id) {
+        return new ResponseEntity<>(leaveCountService.getLeaveCountByUserId(Id), HttpStatus.OK);
     }
 
-    @GetMapping("/casualleaves")
-    public ResponseEntity<LeaveCount> getCasualleaveCount() {
-        return new ResponseEntity<>(leaveCountService.getCasualLeaveCount(), HttpStatus.OK);
-    }
-
-    @GetMapping("/sickleaves")
-    public ResponseEntity<LeaveCount> getSickleaveCount() {
-        return new ResponseEntity<>(leaveCountService.getSickLeaveCount(), HttpStatus.OK);
+    @PostMapping("/adjust/{Id}")
+    public ResponseEntity<?> adjustLeaveCount(@PathVariable long Id, @RequestParam int leaveDays, @RequestParam boolean isApproved) {
+        leaveCountService.adjustLeaveCount(Id, leaveDays, isApproved);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 }

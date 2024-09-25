@@ -3,6 +3,7 @@ package com.qdtas.service.impl;
 import com.qdtas.entity.LeaveCount;
 import com.qdtas.exception.ResourceNotFoundException;
 import com.qdtas.repository.LeaveCountRepository;
+import com.qdtas.repository.UserRepository;
 import com.qdtas.service.LeaveCountService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -13,7 +14,10 @@ import java.util.List;
 public class LeaveCountServiceImpl implements LeaveCountService {
 
     @Autowired
-    LeaveCountRepository leaveCountRepository;
+    private LeaveCountRepository leaveCountRepository;
+
+    @Autowired
+    private UserRepository userRepository; // Assume you have a UserRepository to fetch User data
 
     @Override
     public LeaveCount addLeaveCount(LeaveCount leaveCount) {
@@ -27,42 +31,27 @@ public class LeaveCountServiceImpl implements LeaveCountService {
 
         existingLeaveCount.setCasualLeaves(leaveCount.getCasualLeaves());
         existingLeaveCount.setSickLeaves(leaveCount.getSickLeaves());
-        // Add other fields as needed
+        existingLeaveCount.setTotalLeaves(leaveCount.getTotalLeaves());
 
         return leaveCountRepository.save(existingLeaveCount);
     }
 
     @Override
-    public LeaveCount getAllLeaveCount() {
-        List<LeaveCount> leaveCounts = leaveCountRepository.findAll();
-        LeaveCount totalLeaveCount = new LeaveCount();
-        for (LeaveCount leaveCount : leaveCounts) {
-            totalLeaveCount.setCasualLeaves(totalLeaveCount.getCasualLeaves() + leaveCount.getCasualLeaves());
-            totalLeaveCount.setSickLeaves(totalLeaveCount.getSickLeaves() + leaveCount.getSickLeaves());
-            // Sum other fields as needed
+    public LeaveCount getLeaveCountByUserId(long Id) {
+        return leaveCountRepository.findByUserId(Id)
+                .orElseThrow(() -> new ResourceNotFoundException("LeaveCount", "userId", String.valueOf(Id)));
+    }
+
+    @Override
+    public void adjustLeaveCount(long Id, int leaveDays, boolean isApproved) {
+        LeaveCount leaveCount = leaveCountRepository.findByUserId(Id)
+                .orElseThrow(() -> new ResourceNotFoundException("LeaveCount", "userId", String.valueOf(Id)));
+
+        if (isApproved) {
+            leaveCount.setTotalLeaves(leaveCount.getTotalLeaves() - leaveDays);
+        } else {
+            leaveCount.setTotalLeaves(leaveCount.getTotalLeaves() + leaveDays);
         }
-        return totalLeaveCount;
-    }
-
-    @Override
-    public LeaveCount getCasualLeaveCount() {
-        List<LeaveCount> leaveCounts = leaveCountRepository.findAll();
-        LeaveCount casualLeaveCount = new LeaveCount();
-        int totalCasualLeaves = leaveCounts.stream()
-                .mapToInt(LeaveCount::getCasualLeaves)
-                .sum();
-        casualLeaveCount.setCasualLeaves(totalCasualLeaves);
-        return casualLeaveCount;
-    }
-
-    @Override
-    public LeaveCount getSickLeaveCount() {
-        List<LeaveCount> leaveCounts = leaveCountRepository.findAll();
-        LeaveCount sickLeaveCount = new LeaveCount();
-        int totalSickLeaves = leaveCounts.stream()
-                .mapToInt(LeaveCount::getSickLeaves)
-                .sum();
-        sickLeaveCount.setSickLeaves(totalSickLeaves);
-        return sickLeaveCount;
+        leaveCountRepository.save(leaveCount);
     }
 }

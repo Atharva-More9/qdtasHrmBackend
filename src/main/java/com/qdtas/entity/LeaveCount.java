@@ -18,6 +18,9 @@ public class LeaveCount {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
+    private Long userId; // Ensure this field exists
+
+
     private int totalLeaves;
 
     private int sickLeaves;

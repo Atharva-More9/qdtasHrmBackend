@@ -6,6 +6,7 @@ import com.qdtas.entity.Project;
 import com.qdtas.entity.User;
 import com.qdtas.exception.ResourceNotFoundException;
 import com.qdtas.repository.LeaveRepository;
+import com.qdtas.service.LeaveCountService;
 import com.qdtas.service.LeaveService;
 import com.qdtas.service.UserService;
 import com.qdtas.utils.LeaveStatus;
@@ -35,6 +36,9 @@ public class LeaveServiceImpl implements LeaveService {
     private UserService usr;
     @Autowired
     private EmailService ems;
+
+    @Autowired
+    private LeaveCountService leaveCountService;
 
     @Override
     public List<Leave> getLeaveByEmpId(Long id) {
@@ -84,6 +88,14 @@ public class LeaveServiceImpl implements LeaveService {
 
         User u = usr.getById(empId);
         l.setEmployee(u);
+
+        // Adjust the leave count immediately after the request is made (deduct leaves)
+        leaveCountService.adjustLeaveCount(empId, leaveRequest.getTotalLeaves(), false);
+
+        // Save the leave request
+        Leave savedLeave = leaveRequestRepository.save(l);
+
+        // Notify managers
         Set<Project> projects = u.getProjects();
         Set<User> managerList = new HashSet<>();
         for (Project p : projects) {
@@ -93,12 +105,10 @@ public class LeaveServiceImpl implements LeaveService {
         for (User m : managerList) {
             mEmails.add(m.getEmail());
         }
+        ems.sendLeaveRequestEmail(mEmails, savedLeave);
 
-        Leave save = leaveRequestRepository.save(l);
-        ems.sendLeaveRequestEmail(mEmails, save);
-        return save;
+        return savedLeave;
     }
-
 
 
     public Leave updateLeaveRequest(Long id, LeaveDTO updatedLeaveRequest) {
@@ -127,15 +137,29 @@ public class LeaveServiceImpl implements LeaveService {
                 .orElseThrow(() -> new RuntimeException("Leave request not found"));
 
         leaveRequest.setStatus(LeaveStatus.APPROVED.name());
+        Leave approvedLeave = leaveRequestRepository.save(leaveRequest);
 
-        return leaveRequestRepository.save(leaveRequest);
+        // Adjust the leave count for the employee
+        leaveCountService.adjustLeaveCount(leaveRequest.getEmployee().getUserId(), leaveRequest.getTotalLeaves(), true);
+
+        return approvedLeave;
     }
 
     @PreAuthorize("hasRole('ADMIN')")
     public Leave rejectLeaveRequest(Long id) {
         Leave leaveRequest = leaveRequestRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Leave request not found"));
+
         leaveRequest.setStatus(LeaveStatus.REJECTED.name());
-        return leaveRequestRepository.save(leaveRequest);
+        Leave rejectedLeave = leaveRequestRepository.save(leaveRequest);
+
+        // No adjustment to leave count since the leave is rejected
+        // Optionally, log this action if needed
+
+        return rejectedLeave;
+    }
+    @Override
+    public int getLeaveCountByEmpId(Long id) {
+        return leaveRequestRepository.getTotalLeavesByUserId(id);
     }
 }
