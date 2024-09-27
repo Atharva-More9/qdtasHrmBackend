@@ -1,5 +1,6 @@
 package com.qdtas.service.impl;
 
+import com.qdtas.dto.AddRecruitmentDto;
 import com.qdtas.dto.JsonMessage;
 import com.qdtas.dto.UpdateRecruitmentDto;
 import com.qdtas.entity.Job;
@@ -30,10 +31,28 @@ public class RecruitmentServiceImpl implements RecruitmentService {
     private UserRepository userRepository;
 
     @Override
-    public Recruitment create(Recruitment recruitment) {
-        return recruitmentRepository.save(recruitment);
-    }
+    public Recruitment create(AddRecruitmentDto rdt) {
+        Recruitment savedRecruitment = null;
 
+        // Fetching related Job and User entities
+        Job job = jobRepository.findById(rdt.getJob())
+                .orElseThrow(() -> new ResourceNotFoundException("Job", "job_id", String.valueOf(rdt.getJob())));
+
+        User user = userRepository.findById(rdt.getUser())
+                .orElseThrow(() -> new ResourceNotFoundException("User", "user_id", String.valueOf(rdt.getUser())));
+
+        // Creating a new Recruitment entity
+        Recruitment recruitment = new Recruitment();
+        recruitment.setJob(job);
+        recruitment.setExperience(rdt.getExperience());
+        recruitment.setUser(user);
+        recruitment.setStatus(rdt.getStatus());
+
+        // Saving the recruitment entity
+        savedRecruitment = recruitmentRepository.save(recruitment);
+
+        return savedRecruitment;
+    }
     @Override
     public Recruitment getById(long recruitmentId) {
         return recruitmentRepository.findById(recruitmentId)

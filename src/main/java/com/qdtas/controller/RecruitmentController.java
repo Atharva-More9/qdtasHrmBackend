@@ -1,5 +1,6 @@
 package com.qdtas.controller;
 
+import com.qdtas.dto.AddRecruitmentDto;
 import com.qdtas.dto.JsonMessage;
 import com.qdtas.dto.UpdateRecruitmentDto;
 import com.qdtas.entity.Recruitment;
@@ -45,7 +46,7 @@ public class RecruitmentController {
             }
     )
     @PostMapping("/add")
-    public ResponseEntity<?> addRecruitment(@Valid @RequestBody Recruitment recruitment) {
+    public ResponseEntity<?> addRecruitment(@Valid @RequestBody AddRecruitmentDto recruitment) {
         Recruitment newRecruitment = recruitmentService.create(recruitment);
         return new ResponseEntity<>(newRecruitment, HttpStatus.CREATED);
     }
