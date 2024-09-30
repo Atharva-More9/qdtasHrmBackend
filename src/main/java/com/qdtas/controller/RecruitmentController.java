@@ -68,7 +68,7 @@ public class RecruitmentController {
                     ),
             }
     )
-    @GetMapping("/{recruitmentId}")
+    @GetMapping("getById/{recruitmentId}")
     public ResponseEntity<?> getRecruitmentById(@PathVariable("recruitmentId") Long recruitmentId) {
         try {
             Recruitment recruitment = recruitmentService.getById(recruitmentId);
