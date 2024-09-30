@@ -96,7 +96,7 @@ public class RecruitmentController {
             }
     )
     @PostMapping("/update/{recruitmentId}")
-    public ResponseEntity<?> updateRecruitment(@PathVariable("recruitmentId") Long recruitmentId,
+    public ResponseEntity<?> updateRecruitment(@PathVariable("recruitmentId") long recruitmentId,
                                                @RequestBody UpdateRecruitmentDto recruitmentUpdateDto) {
         try {
             Recruitment updatedRecruitment = recruitmentService.updateById(recruitmentId, recruitmentUpdateDto);
