@@ -95,7 +95,7 @@ public class RecruitmentController {
                     ),
             }
     )
-    @PutMapping("/update/{recruitmentId}")
+    @PostMapping("/update/{recruitmentId}")
     public ResponseEntity<?> updateRecruitment(@PathVariable("recruitmentId") Long recruitmentId,
                                                @RequestBody UpdateRecruitmentDto recruitmentUpdateDto) {
         try {
