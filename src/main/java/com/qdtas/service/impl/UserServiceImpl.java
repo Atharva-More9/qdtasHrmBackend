@@ -98,6 +98,11 @@
         }
 
         @Override
+        public int getTotalUserCount() {
+            return (int)urp.count();
+        }
+
+        @Override
         public User create(AddUserDto rdt) {
             User savedU = null;
             try {
@@ -377,5 +382,7 @@
                     .orElseThrow(() -> new ResourceNotFoundException("User", "UserId", String.valueOf(userId)));
             return user.getTotalLeaves();
         }
+
+
 
     }

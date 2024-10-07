@@ -51,4 +51,6 @@ public interface UserService {
     public Integer getTotalLeaves(Long userId);
 
     public void updateTotalLeaves(Long userId, int newTotalLeaves);
+
+    public int getTotalUserCount();
 }

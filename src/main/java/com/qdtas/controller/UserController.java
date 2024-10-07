@@ -292,15 +292,7 @@ public class UserController {
                     )
             }
     )
-//    @GetMapping("/userInfo/{userName}")
-//    public ResponseEntity<?> getUserInfo(@PathVariable("userName") String userName) {
-//        try {
-//            User user = ussr.getUserByUserName(userName);
-//            return new ResponseEntity<>(user, HttpStatus.OK);
-//        } catch (ResourceNotFoundException e) {
-//            return new ResponseEntity<>(new JsonMessage("User Not Found"), HttpStatus.NOT_FOUND);
-//        }
-//    }
+
     @GetMapping("/userInfo/{userName}")
     public ResponseEntity<?> getUserInfo(@PathVariable("userName") String userName) {
         List<User> users = ussr.getUserByUserName(userName);
@@ -371,26 +363,22 @@ public class UserController {
         }
     }
 
-//    @GetMapping("/calculate-performance")
-//    public ResponseEntity<?> calculatePerformance(
-//            @RequestParam("userId") long userId,
-//            @RequestParam("projectId") long projectId,
-//            @RequestParam("startDate") String startDate,
-//            @RequestParam("endDate") String endDate) {
-//        try {
-//            // Convert the String parameters to LocalDate
-//            DateTimeFormatter formatter = DateTimeFormatter.ISO_LOCAL_DATE;
-//            LocalDate start = LocalDate.parse(startDate, formatter);
-//            LocalDate end = LocalDate.parse(endDate, formatter);
-//
-//            double performance = ussr.calculateEmployeePerformance(userId, projectId, start, end);
-//            return new ResponseEntity<>(performance, HttpStatus.OK);
-//        } catch (DateTimeParseException e) {
-//            return new ResponseEntity<>(new JsonMessage("Invalid date format"), HttpStatus.BAD_REQUEST);
-//        } catch (ResourceNotFoundException e) {
-//            return new ResponseEntity<>(new JsonMessage(e.getMessage()), HttpStatus.NOT_FOUND);
-//        } catch (Exception e) {
-//            return new ResponseEntity<>(new JsonMessage("Something went wrong"), HttpStatus.INTERNAL_SERVER_ERROR);
-//        }
-//    }
+    @Operation(
+            summary = "Get Total Users",
+            description = "Retrieve the total Users",
+            responses = {
+                    @ApiResponse(
+                            description = "Total Users Retrieved", responseCode = "200", content = @io.swagger.v3.oas.annotations.media.Content
+                    ),
+                    @ApiResponse(
+                            description = "Not Found", responseCode = "404", content = @io.swagger.v3.oas.annotations.media.Content
+                    )
+            }
+    )
+    @GetMapping("/totalUserCount")
+    public ResponseEntity<?> getTotalUserCount() {
+        int totalUsers = ussr.getTotalUserCount();
+        return new ResponseEntity<>(totalUsers, HttpStatus.OK);
+    }
+
 }
