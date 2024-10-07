@@ -122,7 +122,22 @@ public class UserController {
         return new ResponseEntity<>(targetUser, HttpStatus.OK);
     }
 
-    @Hidden
+    @Operation(
+            description = "get all users",
+            summary = "get all users",
+            responses = {
+                    @ApiResponse(
+                            description = "OK",
+                            responseCode = "200",
+                            content = @io.swagger.v3.oas.annotations.media.Content
+                    ),
+                    @ApiResponse(
+                            description = "Bad Credentials",
+                            responseCode = "401",
+                            content = @io.swagger.v3.oas.annotations.media.Content
+                    ),
+            }
+    )
     @GetMapping("/getAll")
     public ResponseEntity<?> getAllUsers(@RequestParam(value = "pgn",defaultValue = "1") int pgn,
                                          @RequestParam(value = "sz" ,defaultValue = "10") int size) {
