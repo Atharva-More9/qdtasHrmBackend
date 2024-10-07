@@ -18,4 +18,6 @@ public interface RecruitmentService {
     public Recruitment updateById(long Id, UpdateRecruitmentDto ur);
 
     public JsonMessage deleteById(long recruitmentId);
+
+    public int getTotalCount();
 }

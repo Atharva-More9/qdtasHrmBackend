@@ -61,4 +61,9 @@ public class DepartmentServiceImpl implements DepartmentService {
         Department d = getById(deptId);
         return new ArrayList<>(d.getEmployees());
     }
+
+    @Override
+    public int getTotalCount() {
+        return (int)drp.count();
+    }
 }

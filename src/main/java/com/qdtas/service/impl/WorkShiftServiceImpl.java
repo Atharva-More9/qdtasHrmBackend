@@ -55,4 +55,9 @@ public class WorkShiftServiceImpl implements WorkShiftService {
     public List<WorkShift> getAllWorkShifts(int pgn, int size) {
         return wsr.findAll(PageRequest.of(pgn, size, Sort.by(Sort.Direction.ASC, "workShiftName"))).stream().collect(Collectors.toList());
     }
+
+    @Override
+    public int getTotalCount() {
+        return (int)wsr.count();
+    }
 }

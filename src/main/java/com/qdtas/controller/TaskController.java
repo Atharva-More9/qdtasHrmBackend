@@ -160,4 +160,25 @@ public class TaskController {
         }
     }
 
+    @Operation(
+            description = "Get Total number of Tasks",
+            summary = "Get Total number of Tasks",
+            responses = {
+                    @ApiResponse(
+                            description = "Ok",
+                            responseCode = "200",
+                            content = @io.swagger.v3.oas.annotations.media.Content
+                    ),
+                    @ApiResponse(
+                            description = "Timesheet Not Found",
+                            responseCode = "400",
+                            content = @io.swagger.v3.oas.annotations.media.Content
+                    )
+            }
+    )
+    @GetMapping("/getTotalCount")
+    public ResponseEntity<?> getTotalCount(){
+        int tasks = tsr.getTotalCount();
+        return new ResponseEntity<>(tasks, HttpStatus.OK);
+    }
 }

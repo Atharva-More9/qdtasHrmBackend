@@ -26,5 +26,5 @@ public interface TaskService {
 
     public List<Task> getTasksByStatusAndDateRange(long empId, String status, LocalDate startDate, LocalDate endDate);
 
-
+    public int getTotalCount();
 }

@@ -2,6 +2,7 @@ package com.qdtas.controller;
 
 import com.qdtas.entity.JobCategory;
 import com.qdtas.service.JobCategoryService;
+import io.swagger.models.Response;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -136,4 +137,27 @@ public class JobCategoryController {
         List<JobCategory> ul = jobCategoryService.getAll(pgn, size);
         return new ResponseEntity<>(ul, HttpStatus.OK);
     }
+
+    @Operation(
+            description = "Get Total number of JobCategories",
+            summary = "Get Total number of JobCategories",
+            responses = {
+                    @io.swagger.v3.oas.annotations.responses.ApiResponse(
+                            description = "Successfull",
+                            responseCode = "200",
+                            content = @io.swagger.v3.oas.annotations.media.Content
+
+                    ),
+                    @ApiResponse(
+                            description = "Something went wrong",
+                            responseCode = "400",
+                            content = @io.swagger.v3.oas.annotations.media.Content
+                    ),
+            }
+    )
+    @GetMapping("/getTotalCount")
+    public ResponseEntity<?> getTotalCount(){
+        return new ResponseEntity<>(jobCategoryService.getTotalCount(), HttpStatus.OK);
+    }
+
 }

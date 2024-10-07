@@ -55,4 +55,9 @@ public class EmploymentStatusServiceImpl implements EmploymentStatusService {
     public List<EmploymentStatus> getAll(int pgn, int size) {
         return employmentStatusRepository.findAll(PageRequest.of(pgn, size, Sort.by(Sort.Direction.ASC, "employmentStatusName"))).stream().collect(Collectors.toList());
     }
+
+    @Override
+    public int getTotalCount() {
+        return (int)employmentStatusRepository.count();
+    }
 }

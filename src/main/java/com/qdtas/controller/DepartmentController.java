@@ -148,4 +148,26 @@ public class DepartmentController {
     public ResponseEntity<?> getAllUsers(@PathVariable long deptId) {
         return new ResponseEntity<>(dsr.getAllUsers(deptId), HttpStatus.OK);
     }
+
+    @Operation(
+            description = "Get Total number of Departments",
+            summary = "Get Total number of Departments",
+            responses = {
+                    @io.swagger.v3.oas.annotations.responses.ApiResponse(
+                            description = "Successfull",
+                            responseCode = "200",
+                            content = @io.swagger.v3.oas.annotations.media.Content
+
+                    ),
+                    @ApiResponse(
+                            description = "Something went wrong",
+                            responseCode = "400",
+                            content = @io.swagger.v3.oas.annotations.media.Content
+                    ),
+            }
+    )
+    @GetMapping("/getTotalCount")
+    public ResponseEntity<?> getTotalCount(){
+        return new ResponseEntity<>(dsr.getTotalCount(), HttpStatus.OK);
+    }
 }

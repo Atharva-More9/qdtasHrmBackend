@@ -73,4 +73,9 @@ public class TimesheetServiceImpl implements TimesheetService {
         }
         return trp.save(t);
     }
+
+    @Override
+    public int getTotalCount() {
+        return (int)trp.count();
+    }
 }

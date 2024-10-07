@@ -4,6 +4,7 @@ import com.qdtas.dto.JsonMessage;
 import com.qdtas.dto.LeaveDTO;
 import com.qdtas.entity.Leave;
 import com.qdtas.entity.User;
+import com.qdtas.repository.LeaveRepository;
 import com.qdtas.service.LeaveService;
 import io.swagger.v3.oas.annotations.Hidden;
 import io.swagger.v3.oas.annotations.Operation;
@@ -26,6 +27,8 @@ import java.util.List;
 public class LeaveController {
     @Autowired
     private LeaveService leaveRequestService;
+    @Autowired
+    private LeaveRepository leaveRepository;
 
     @Hidden
     @GetMapping("/getAllLeaves")
@@ -205,5 +208,28 @@ public class LeaveController {
     public ResponseEntity<?> getTotalById(@PathVariable long Id){
         int totalLeaves = leaveRequestService.getLeaveCountByEmpId(Id);
         return new ResponseEntity<>(totalLeaves, HttpStatus.OK);
+    }
+
+    @Operation(
+            description = "Get Total number of Leaves",
+            summary = "Get Total number of Leaves",
+            responses = {
+                    @io.swagger.v3.oas.annotations.responses.ApiResponse(
+                            description = "Successfull",
+                            responseCode = "200",
+                            content = @io.swagger.v3.oas.annotations.media.Content
+
+                    ),
+                    @ApiResponse(
+                            description = "Something went wrong",
+                            responseCode = "400",
+                            content = @io.swagger.v3.oas.annotations.media.Content
+                    ),
+            }
+    )
+    @GetMapping("/getTotalCount")
+    public ResponseEntity<?> getTotalCount(){
+        int leave = leaveRequestService.getTotalCount();
+        return new ResponseEntity<>(leave, HttpStatus.OK);
     }
 }

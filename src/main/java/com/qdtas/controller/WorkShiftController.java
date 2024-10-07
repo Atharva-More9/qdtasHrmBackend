@@ -3,6 +3,7 @@ package com.qdtas.controller;
 import com.qdtas.entity.JobCategory;
 import com.qdtas.entity.WorkShift;
 import com.qdtas.service.WorkShiftService;
+import io.swagger.models.Response;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -137,5 +138,28 @@ public class WorkShiftController {
         size = size < 0 ? 5 : size;
         List<WorkShift> ul = wss.getAllWorkShifts(pgn, size);
         return new ResponseEntity<>(ul, HttpStatus.OK);
+    }
+
+    @Operation(
+            description = "Get Total Work Shifts",
+            summary = "Get Total Work Shifts",
+            responses = {
+                    @ApiResponse(
+                            description = "Successful",
+                            responseCode = "200",
+                            content = @io.swagger.v3.oas.annotations.media.Content
+
+                    ),
+                    @ApiResponse(
+                            description = "Something went wrong",
+                            responseCode = "400",
+                            content = @io.swagger.v3.oas.annotations.media.Content
+                    ),
+            }
+    )
+    @GetMapping("/getTotalCount")
+    public ResponseEntity<?> getTotalCount(){
+        int workshifts = wss.getTotalCount();
+        return new ResponseEntity<>(workshifts, HttpStatus.OK);
     }
 }

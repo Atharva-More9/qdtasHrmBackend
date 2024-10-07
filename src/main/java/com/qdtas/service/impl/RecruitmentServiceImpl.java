@@ -103,4 +103,9 @@ public class RecruitmentServiceImpl implements RecruitmentService {
         recruitmentRepository.delete(recruitment);
         return new JsonMessage("Recruitment deleted successfully");
     }
+
+    @Override
+    public int getTotalCount() {
+        return (int)recruitmentRepository.count();
+    }
 }

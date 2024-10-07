@@ -55,4 +55,9 @@ public class JobCategoryServiceImpl implements JobCategoryService {
     public List<JobCategory> getAll(int pgn, int size) {
         return jobCategoryRepository.findAll(PageRequest.of(pgn, size, Sort.by(Sort.Direction.ASC, "JobCategoryName"))).stream().collect(Collectors.toList());
     }
+
+    @Override
+    public int getTotalCount() {
+        return (int)jobCategoryRepository.count();
+    }
 }

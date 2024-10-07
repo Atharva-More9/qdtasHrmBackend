@@ -142,4 +142,26 @@ public class JobController {
         return new ResponseEntity<>(ul, HttpStatus.OK);
     }
 
+    @Operation(
+            description = "Get Total number of Jobs",
+            summary = "Get Total number of Jobs",
+            responses = {
+                    @io.swagger.v3.oas.annotations.responses.ApiResponse(
+                            description = "Successfull",
+                            responseCode = "200",
+                            content = @io.swagger.v3.oas.annotations.media.Content
+
+                    ),
+                    @ApiResponse(
+                            description = "Something went wrong",
+                            responseCode = "400",
+                            content = @io.swagger.v3.oas.annotations.media.Content
+                    ),
+            }
+    )
+    @GetMapping("/getTotalCount")
+    public ResponseEntity<?> getTotalCount(){
+        int totalJobs = jobService.getTotalCount();
+        return new ResponseEntity<>(totalJobs, HttpStatus.OK);
+    }
 }

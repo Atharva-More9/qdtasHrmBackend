@@ -6,6 +6,7 @@ import com.qdtas.dto.UpdateRecruitmentDto;
 import com.qdtas.entity.Recruitment;
 import com.qdtas.exception.ResourceNotFoundException;
 import com.qdtas.service.RecruitmentService;
+import io.swagger.models.Response;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -154,6 +155,29 @@ public class RecruitmentController {
     public ResponseEntity<?> getAllRecruitments(@RequestParam(value = "pgn", defaultValue = "1") int pgn,
                                                 @RequestParam(value = "sz", defaultValue = "10") int size) {
         List<Recruitment> recruitments = recruitmentService.getAllRecruitments(pgn - 1, size);
+        return new ResponseEntity<>(recruitments, HttpStatus.OK);
+    }
+
+    @Operation(
+            description = "Get Total number of Recruitments",
+            summary = "Get Total number of Recruitments",
+            responses = {
+                    @io.swagger.v3.oas.annotations.responses.ApiResponse(
+                            description = "Successfull",
+                            responseCode = "200",
+                            content = @io.swagger.v3.oas.annotations.media.Content
+
+                    ),
+                    @ApiResponse(
+                            description = "Something went wrong",
+                            responseCode = "400",
+                            content = @io.swagger.v3.oas.annotations.media.Content
+                    ),
+            }
+    )
+    @GetMapping("/getTotalCount")
+    public ResponseEntity<?> getTotalCount() {
+        int recruitments = recruitmentService.getTotalCount();
         return new ResponseEntity<>(recruitments, HttpStatus.OK);
     }
 }

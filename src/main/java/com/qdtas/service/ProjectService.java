@@ -36,4 +36,5 @@ public interface ProjectService {
 
     public Project removeManagers(List<Long> empIds,long pId);
 
+    public int getTotalCount();
 }

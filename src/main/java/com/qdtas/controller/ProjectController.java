@@ -420,4 +420,29 @@ public class ProjectController {
             return new ResponseEntity<>(new JsonMessage("Something went wrong while deleting the project"), HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+
+    //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    @Operation(
+            description = "Get Total number of Projects",
+            summary = "Get Total number of Projects",
+            responses = {
+                    @io.swagger.v3.oas.annotations.responses.ApiResponse(
+                            description = "Successfull",
+                            responseCode = "200",
+                            content = @io.swagger.v3.oas.annotations.media.Content
+
+                    ),
+                    @ApiResponse(
+                            description = "Something went wrong",
+                            responseCode = "400",
+                            content = @io.swagger.v3.oas.annotations.media.Content
+                    ),
+            }
+    )
+    @GetMapping("/getTotalCount")
+    public ResponseEntity<?> getTotalCount(){
+        int projects = psr.getTotalCount();
+        return new ResponseEntity<>(projects, HttpStatus.OK);
+    }
 }

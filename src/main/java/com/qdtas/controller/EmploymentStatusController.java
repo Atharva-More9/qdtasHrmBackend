@@ -137,4 +137,27 @@ public class EmploymentStatusController {
         List<EmploymentStatus> ul = employmentStatusService.getAll(pgn, size);
         return new ResponseEntity<>(ul, HttpStatus.OK);
     }
+
+    @Operation(
+            description = "Get Total number of Employment statuses",
+            summary = "Get Total number of Employment statuses",
+            responses = {
+                    @io.swagger.v3.oas.annotations.responses.ApiResponse(
+                            description = "Successfull",
+                            responseCode = "200",
+                            content = @io.swagger.v3.oas.annotations.media.Content
+
+                    ),
+                    @ApiResponse(
+                            description = "Something went wrong",
+                            responseCode = "400",
+                            content = @io.swagger.v3.oas.annotations.media.Content
+                    ),
+            }
+    )
+    @GetMapping("/getTotalCount")
+    public ResponseEntity<?> getTotalCount(){
+        int totalCount = employmentStatusService.getTotalCount();
+        return new ResponseEntity<>(totalCount, HttpStatus.OK);
+    }
 }

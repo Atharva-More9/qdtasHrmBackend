@@ -41,6 +41,8 @@ public class LeaveServiceImpl implements LeaveService {
 
     @Autowired
     private LeaveCountService leaveCountService;
+    @Autowired
+    private LeaveRepository leaveRepository;
 
     @Override
     public List<Leave> getLeaveByEmpId(Long id) {
@@ -240,5 +242,10 @@ public Leave approveLeaveRequest(Long id) {
     @Override
     public int getLeaveCountByEmpId(Long id) {
         return leaveRequestRepository.getTotalLeavesByUserId(id);
+    }
+
+    @Override
+    public int getTotalCount() {
+        return (int)leaveRepository.count();
     }
 }

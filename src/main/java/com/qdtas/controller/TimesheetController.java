@@ -132,4 +132,26 @@ public class TimesheetController {
         return new ResponseEntity<>(tsr.updateTimesheet(tsId,ts), HttpStatus.OK);
     }
 
+    @Operation(
+            description = "Get Total number of timesheets",
+            summary = "Get Total number of timesheets",
+            responses = {
+                    @ApiResponse(
+                            description = "Ok",
+                            responseCode = "200",
+                            content = @io.swagger.v3.oas.annotations.media.Content
+                    ),
+                    @ApiResponse(
+                            description = "Timesheet Not Found",
+                            responseCode = "400",
+                            content = @io.swagger.v3.oas.annotations.media.Content
+                    )
+            }
+    )
+    @GetMapping("/getTotalCount")
+    public ResponseEntity<?> getTotalCount(){
+        int timesheets = tsr.getTotalCount();
+        return new ResponseEntity<>(timesheets, HttpStatus.OK);
+    }
+
 }

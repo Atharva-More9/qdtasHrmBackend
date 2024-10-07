@@ -16,4 +16,6 @@ public interface EmploymentStatusService {
     public JsonMessage deleteById(long id);
 
     public List<EmploymentStatus> getAll(int pgn, int size);
+
+    public int getTotalCount();
 }

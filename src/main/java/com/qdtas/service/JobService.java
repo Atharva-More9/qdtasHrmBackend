@@ -17,5 +17,5 @@ public interface JobService {
 
     public List<Job> getAll(int pgn, int size);
 
-
+    public int getTotalCount();
 }

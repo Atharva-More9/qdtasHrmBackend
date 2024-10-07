@@ -22,4 +22,5 @@ public interface DepartmentService {
 
     public List<User> getAllUsers(long DeptId);
 
+    public int getTotalCount();
 }

@@ -17,4 +17,6 @@ public interface WorkShiftService {
     public JsonMessage deleteWorkShiftById(long id);
 
     public List<WorkShift> getAllWorkShifts(int pgn, int size);
+
+    public int getTotalCount();
 }

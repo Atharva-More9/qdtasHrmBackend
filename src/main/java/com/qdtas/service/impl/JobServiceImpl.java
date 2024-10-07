@@ -53,4 +53,9 @@ public class JobServiceImpl implements JobService {
         return jobRepository.findAll(PageRequest.of(pgn, size, Sort.by(Sort.Direction.ASC, "jobName"))).stream().collect(Collectors.toList());
     }
 
+    @Override
+    public int getTotalCount() {
+        return (int)jobRepository.count();
+    }
+
 }

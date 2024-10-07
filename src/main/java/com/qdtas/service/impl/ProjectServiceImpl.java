@@ -190,6 +190,11 @@ public class ProjectServiceImpl implements ProjectService {
     }
 
     @Override
+    public int getTotalCount() {
+        return (int)prp.count();
+    }
+
+    @Override
     public void deleteProject(long pId) {
         Project p = prp.findById(pId).orElseThrow(() -> new ResourceNotFoundException("Project", "Project ID", String.valueOf(pId)));
         prp.delete(p);

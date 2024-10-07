@@ -16,4 +16,6 @@ public interface JobCategoryService {
     public JobCategory getById(Long id);
 
     public List<JobCategory> getAll(int pgn, int size);
+
+    public int getTotalCount();
 }

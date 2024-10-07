@@ -80,4 +80,9 @@ public class TaskServiceImpl implements TaskService {
     public List<Task> getTasksByStatusAndDateRange(long empId, String status, LocalDate startDate, LocalDate endDate) {
         return taskRepository.findTasksByStatusAndEmpIdAndDateRange(empId, status, startDate, endDate);
     }
+
+    @Override
+    public int getTotalCount() {
+        return (int)taskRepository.count();
+    }
 }

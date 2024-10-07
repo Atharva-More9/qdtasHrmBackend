@@ -22,4 +22,6 @@ public interface LeaveService {
     public Leave rejectLeaveRequest(Long id);
 
     public int getLeaveCountByEmpId(Long id);
+
+    public int getTotalCount();
 }
