@@ -148,9 +148,9 @@ public class TimesheetController {
                     )
             }
     )
-    @GetMapping("/getTotalCount")
-    public ResponseEntity<?> getTotalCount(){
-        int timesheets = tsr.getTotalCount();
+    @GetMapping("/getTotalCount/{tsId}")
+    public ResponseEntity<?> getTotalCountById(@PathVariable long tsId){
+        int timesheets = tsr.getTotalCountById(tsId);
         return new ResponseEntity<>(timesheets, HttpStatus.OK);
     }
 

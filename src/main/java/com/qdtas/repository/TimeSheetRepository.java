@@ -13,4 +13,7 @@ public interface TimeSheetRepository extends JpaRepository<Timesheet,Long> {
 
     @Query(value = "SELECT * FROM timesheet WHERE emp_id=:empId order by date desc ",nativeQuery = true)
     public List<Timesheet> findAllByEmp(long empId ,Pageable pageable);
+
+    @Query(value = "SELECT COUNT(*) FROM timesheet WHERE emp_id=:empId", nativeQuery = true)
+    public int countByEmpId(long empId);
 }

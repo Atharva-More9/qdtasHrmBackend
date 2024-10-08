@@ -17,7 +17,7 @@ public interface TimesheetService {
 
     public Timesheet updateTimesheet(long tsId, Timesheet ts);
 
-    public int getTotalCount();
+    public int getTotalCountById(long id);
 
 
 }

@@ -75,7 +75,7 @@ public class TimesheetServiceImpl implements TimesheetService {
     }
 
     @Override
-    public int getTotalCount() {
-        return (int)trp.count();
+    public int getTotalCountById(long id) {
+        return (int)trp.countByEmpId(id);
     }
 }
