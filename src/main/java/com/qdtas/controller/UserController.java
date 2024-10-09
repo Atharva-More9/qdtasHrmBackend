@@ -115,7 +115,7 @@ public class UserController {
         }
     }
 
-    @Hidden
+//    @Hidden
     @GetMapping("/{userId}")
     public ResponseEntity<?> getUserById(@PathVariable("userId") Long userId) {
         User targetUser = ussr.getById(userId);
