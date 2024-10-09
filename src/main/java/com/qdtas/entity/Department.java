@@ -23,6 +23,7 @@ public class Department {
 
     @Pattern(regexp = "^[a-zA-Z]+$", message = "Only alphabets are allowed")
     @NotBlank(message = "Department name should not be blank")
+    @Column(length = 20, nullable = false)
     private String deptName;
 
     @JsonIgnore

@@ -26,6 +26,7 @@ public class JobCategory {
 
     @Pattern(regexp = "^[a-zA-Z ]+$", message = "Only alphabets are allowed")
     @NotBlank(message = "Job Description should not be blank")
+    @Column(length = 20, nullable = false)
     private String jobCategoryName;
 
     @JsonIgnore

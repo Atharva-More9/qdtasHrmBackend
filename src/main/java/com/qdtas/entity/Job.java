@@ -25,10 +25,12 @@ public class Job {
 
     @Pattern(regexp = "^[a-zA-Z ]+$", message = "Only alphabets are allowed")
     @NotBlank(message = "Job name should not be blank")
+    @Column(length = 20, nullable = false)
     private String jobName;
 
     @Pattern(regexp = "^[a-zA-Z ]+$", message = "Only alphabets are allowed")
     @NotBlank(message = "Job Description should not be blank")
+    @Column(length = 30, nullable = false)
     private String jobDescription;
 
     @JsonIgnore

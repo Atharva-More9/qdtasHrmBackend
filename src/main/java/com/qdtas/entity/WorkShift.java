@@ -23,6 +23,7 @@ public class WorkShift {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long workShiftId;
 
+    @Column(length = 20, nullable = false)
     private String workShiftName;
 
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "HH:mm")
