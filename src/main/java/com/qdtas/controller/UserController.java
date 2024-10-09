@@ -115,7 +115,22 @@ public class UserController {
         }
     }
 
-//    @Hidden
+    @Operation(
+            description = "get user by id",
+            summary = "get user by id",
+            responses = {
+                    @ApiResponse(
+                            description = "OK",
+                            responseCode = "200",
+                            content = @io.swagger.v3.oas.annotations.media.Content
+                    ),
+                    @ApiResponse(
+                            description = "Bad Credentials",
+                            responseCode = "401",
+                            content = @io.swagger.v3.oas.annotations.media.Content
+                    ),
+            }
+    )
     @GetMapping("/{userId}")
     public ResponseEntity<?> getUserById(@PathVariable("userId") Long userId) {
         User targetUser = ussr.getById(userId);
