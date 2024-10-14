@@ -40,7 +40,7 @@ public class LeaveController {
         return new ResponseEntity<>(l, HttpStatus.OK);
 
     }
-    /*
+
         @Operation(
                 description = "Create Leave Request",
                 summary = "1. Create leave",
@@ -57,8 +57,7 @@ public class LeaveController {
                                 content = @io.swagger.v3.oas.annotations.media.Content
                         ),
                 }
-        )*/
-    @Hidden
+        )
     @PostMapping("/create/{empId}")
     public ResponseEntity<?> createLeaveRequest(@Valid @RequestBody LeaveDTO leaveRequest, @PathVariable long empId) {
         try {
