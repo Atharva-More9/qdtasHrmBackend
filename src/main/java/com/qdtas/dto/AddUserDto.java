@@ -46,6 +46,9 @@ public class AddUserDto {
     @NotBlank(message = "Gender cannot be blank")
     private String gender;
 
+    @Pattern(regexp = "^[a-zA-Z ]+$", message = "Only alphabets are allowed")
+    private String address;
+
     @NonZero
     @NotNull(message = "Department ID cannot be null")
     private Long deptId;
