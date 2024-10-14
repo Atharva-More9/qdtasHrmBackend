@@ -27,7 +27,7 @@ public class Task {
 
     private String dueDate;
 
-    @ManyToOne(cascade = { CascadeType.PERSIST, CascadeType.MERGE })
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "emp_id")
     private User empId;
 

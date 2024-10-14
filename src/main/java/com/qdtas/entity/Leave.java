@@ -24,7 +24,7 @@ public class Leave {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long leaveId;
 
-    @ManyToOne(cascade = { CascadeType.PERSIST, CascadeType.MERGE })
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "user_id")
     private User employee;
 

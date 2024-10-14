@@ -38,7 +38,7 @@ public class User{
 
     private String gender;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "dept_id")
     private Department dept;
 
@@ -50,15 +50,15 @@ public class User{
     @Column(length = 150)
     private String address;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "job_id")
     private Job jobId;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "employee_status_id")
     private EmploymentStatus employmentStatusId;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "job_category_id")
     private JobCategory jobCategoryId;
 
