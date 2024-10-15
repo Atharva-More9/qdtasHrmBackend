@@ -76,11 +76,11 @@ public class User{
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
     private Date joinDate;
 
-//    // Set default value of totalLeaves to 20
-//    @PrePersist
-//    protected void onCreate() {
-//        if (this.totalLeaves == 0) {
-//            this.totalLeaves = 20;
-//        }
-//    }
+    // Set default value of totalLeaves to 20
+    @PrePersist
+    protected void onCreate() {
+        if (this.totalLeaves == 0) {
+            this.totalLeaves = 20;
+        }
+    }
 }
