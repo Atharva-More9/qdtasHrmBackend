@@ -12,6 +12,7 @@
     import com.qdtas.security.JwtHelper;
     import com.qdtas.service.TaskService;
     import com.qdtas.service.UserService;
+    import com.qdtas.utils.Role;
     import org.springframework.beans.factory.annotation.Autowired;
     import org.springframework.core.env.Environment;
     import org.springframework.data.domain.PageRequest;
@@ -134,7 +135,7 @@
                 u.setGender(rdt.getGender());
                 u.setDept(department);
                 u.setJoinDate(new Date());
-                u.setRole(rdt.getRole());
+                u.setRole(Role.ROLE_USER.name());
                 u.setPhoneNumber(rdt.getPhoneNumber());
                 u.setJobId(job);
                 u.setJobCategoryId(jobCategory);
