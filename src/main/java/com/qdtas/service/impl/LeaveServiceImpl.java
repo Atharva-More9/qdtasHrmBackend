@@ -121,31 +121,29 @@ public class LeaveServiceImpl implements LeaveService {
             throw new RuntimeException("The leave request overlaps with an approved leave.");
         }
 
+        LocalDate startDate = leaveRequest.getStartDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+        LocalDate endDate = leaveRequest.getEndDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+        long daysBetween = ChronoUnit.DAYS.between(startDate, endDate) + 1;
+
+        User u = usr.getById(empId);
+
+        // Check if the employee has enough leaves
+        if (u.getTotalLeaves() < daysBetween) {
+            throw new IllegalArgumentException("Insufficient leave balance to request leave.");
+        }
+
         Leave l = new Leave();
         l.setStatus(LeaveStatus.PENDING.name());
         l.setReason(leaveRequest.getReason());
         l.setType(leaveRequest.getType());
-
-        LocalDate startDate = leaveRequest.getStartDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
-        LocalDate endDate = leaveRequest.getEndDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
-
         l.setStartDate(Date.from(startDate.atStartOfDay(ZoneId.systemDefault()).toInstant()));
         l.setEndDate(Date.from(endDate.atStartOfDay(ZoneId.systemDefault()).toInstant()));
-
-        User u = usr.getById(empId);
         l.setEmployee(u);
-
-//        // Deduct the leaves from the user's total leaves
-//        int totalLeaves = leaveRequest.getTotalLeaves(); // Adjust based on request
-//        int remainingLeaves = u.getTotalLeaves() - totalLeaves;
-
-        // Update user's total leaves
-        usr.updateTotalLeaves(empId, u.getTotalLeaves());
 
         // Save the leave request
         Leave savedLeave = leaveRequestRepository.save(l);
 
-        // Notify managers
+        // Notify managers (same logic as before)
         Set<Project> projects = u.getProjects();
         Set<User> managerList = new HashSet<>();
         for (Project p : projects) {
@@ -182,33 +180,7 @@ public class LeaveServiceImpl implements LeaveService {
         leaveRequestRepository.delete(l);
     }
 
-//    @PreAuthorize("hasRole('ADMIN')")
-//    public Leave approveLeaveRequest(Long id) {
-//        Leave leaveRequest = leaveRequestRepository.findById(id)
-//                .orElseThrow(() -> new RuntimeException("Leave request not found"));
-//
-//        leaveRequest.setStatus(LeaveStatus.APPROVED.name());
-//        Leave approvedLeave = leaveRequestRepository.save(leaveRequest);
-//
-//        // Adjust the leave count for the employee
-//        leaveCountService.adjustLeaveCount(leaveRequest.getEmployee().getUserId(), leaveRequest.getTotalLeaves(), true);
-//
-//        return approvedLeave;
-//    }
-//
-//    @PreAuthorize("hasRole('ADMIN')")
-//    public Leave rejectLeaveRequest(Long id) {
-//        Leave leaveRequest = leaveRequestRepository.findById(id)
-//                .orElseThrow(() -> new RuntimeException("Leave request not found"));
-//
-//        leaveRequest.setStatus(LeaveStatus.REJECTED.name());
-//        Leave rejectedLeave = leaveRequestRepository.save(leaveRequest);
-//
-//        // No adjustment to leave count since the leave is rejected
-//        // Optionally, log this action if needed
-//
-//        return rejectedLeave;
-//    }
+
 @PreAuthorize("hasRole('ADMIN')")
 public Leave approveLeaveRequest(Long id) {
     Leave leaveRequest = leaveRequestRepository.findById(id)
@@ -219,10 +191,16 @@ public Leave approveLeaveRequest(Long id) {
     // Calculate the number of days between startDate and endDate
     LocalDate startDate = leaveRequest.getStartDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
     LocalDate endDate = leaveRequest.getEndDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
-    long daysBetween = ChronoUnit.DAYS.between(startDate, endDate); // Include both start and end dates
+    long daysBetween = ChronoUnit.DAYS.between(startDate, endDate) + 1; // Include both start and end dates
+
+    // Check if the employee has enough leaves
+    User employee = leaveRequest.getEmployee();
+    if (employee.getTotalLeaves() < daysBetween) {
+        throw new IllegalArgumentException("Insufficient leave balance. Cannot approve leave.");
+    }
 
     // Adjust the total leaves based on the approved leave request
-    leaveRequest.getEmployee().setTotalLeaves(leaveRequest.getEmployee().getTotalLeaves() - (int) daysBetween );
+    employee.setTotalLeaves(employee.getTotalLeaves() - (int) daysBetween);
 
     leaveRequestRepository.save(leaveRequest); // Save the updated leave request
     return leaveRequest;
