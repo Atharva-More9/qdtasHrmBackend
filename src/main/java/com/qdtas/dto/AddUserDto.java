@@ -57,6 +57,10 @@ public class AddUserDto {
     @NotBlank(message = "Role cannot be blank")
     private String role;
 
+    @Pattern(regexp = "^[A-Z]*(_[A-Z]*)?$", message = "Only one underscore and Uppercase alphabates allowed")
+    @NotBlank(message = "Sub Role cannot be blank")
+    private String subRole;
+
     @Pattern(regexp = "^[0-9]{10}$", message = "Please enter exactly 10 digits")
     private String phoneNumber;
 

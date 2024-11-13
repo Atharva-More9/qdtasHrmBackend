@@ -36,6 +36,8 @@ public class    UpdateUserDTO {
 
     private String role;
 
+    private String subRole;
+
     private String phoneNumber;
 
     private String address;

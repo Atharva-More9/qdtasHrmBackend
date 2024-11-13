@@ -13,6 +13,7 @@
     import com.qdtas.service.TaskService;
     import com.qdtas.service.UserService;
     import com.qdtas.utils.Role;
+    import com.qdtas.utils.SubRole;
     import org.springframework.beans.factory.annotation.Autowired;
     import org.springframework.core.env.Environment;
     import org.springframework.data.domain.PageRequest;
@@ -136,6 +137,7 @@
                 u.setDept(department);
                 u.setJoinDate(new Date());
                 u.setRole(Role.ROLE_USER.name());
+                u.setSubRole(SubRole.ROLE_USER.name());
                 u.setPhoneNumber(rdt.getPhoneNumber());
                 u.setJobId(job);
                 u.setJobCategoryId(jobCategory);
@@ -291,6 +293,8 @@
                 u.setJobCategoryId(byId);
             } else if (ud.getRole() != null) {
                 u.setRole(ud.getRole());
+            } else if (ud.getSubRole() != null) {
+                u.setRole(ud.getSubRole());
             } else if (ud.getBirthDate() != null) {
                 u.setBirthDate(ud.getBirthDate());
             } else if (ud.getPassword() != null) {
