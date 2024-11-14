@@ -47,7 +47,8 @@ public class User{
     private String role;
 
     @Column(length = 32, nullable = false)
-    private String subRole;
+    @Enumerated(EnumType.STRING) // Store the enum as a string in the DB
+    private SubRole subRole;
 
     private String phoneNumber;
 
