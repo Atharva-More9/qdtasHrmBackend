@@ -3,6 +3,7 @@ package com.qdtas.dto;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.qdtas.utils.NoSpaces;
 import com.qdtas.utils.NonZero;
+import com.qdtas.utils.SubRole;
 import jakarta.validation.constraints.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -59,7 +60,7 @@ public class AddUserDto {
 
     @Pattern(regexp = "^[A-Z]*(_[A-Z]*)?$", message = "Only one underscore and Uppercase alphabates allowed")
     @NotBlank(message = "Sub Role cannot be blank")
-    private String subRole;
+    private SubRole subRole;
 
     @Pattern(regexp = "^[0-9]{10}$", message = "Please enter exactly 10 digits")
     private String phoneNumber;
