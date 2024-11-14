@@ -294,7 +294,7 @@
             } else if (ud.getRole() != null) {
                 u.setRole(ud.getRole());
             } else if (ud.getSubRole() != null) {
-                u.setRole(ud.getSubRole());
+                u.setSubRole(ud.getSubRole());
             } else if (ud.getBirthDate() != null) {
                 u.setBirthDate(ud.getBirthDate());
             } else if (ud.getPassword() != null) {
