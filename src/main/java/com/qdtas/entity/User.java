@@ -3,6 +3,7 @@ package com.qdtas.entity;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.qdtas.utils.SubRole;
 import io.swagger.v3.oas.annotations.Hidden;
 import jakarta.persistence.*;
 import lombok.*;
@@ -46,7 +47,7 @@ public class User{
     private String role;
 
     @Column(length = 32, nullable = false)
-    private String subRole;
+    private SubRole subRole;
 
     private String phoneNumber;
 
