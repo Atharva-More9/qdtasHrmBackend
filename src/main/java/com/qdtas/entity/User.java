@@ -47,7 +47,7 @@ public class User{
     private String role;
 
     @Column(length = 32, nullable = false)
-    private SubRole subRole;
+    private String subRole;
 
     private String phoneNumber;
 
