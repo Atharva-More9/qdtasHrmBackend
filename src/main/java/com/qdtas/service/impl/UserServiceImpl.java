@@ -137,7 +137,7 @@
                 u.setDept(department);
                 u.setJoinDate(new Date());
                 u.setRole(Role.ROLE_USER.name());
-                u.setSubRole(SubRole.ROLE_USER.name());
+                u.setSubRole(rdt.getSubRole());
                 u.setPhoneNumber(rdt.getPhoneNumber());
                 u.setJobId(job);
                 u.setJobCategoryId(jobCategory);
