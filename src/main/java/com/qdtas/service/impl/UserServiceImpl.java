@@ -137,7 +137,7 @@
                 u.setDept(department);
                 u.setJoinDate(new Date());
                 u.setRole(Role.ROLE_USER.name());
-                u.setSubRole(SubRole.valueOf(rdt.getSubRole()));
+                u.setSubRole(rdt.getSubRole());
                 u.setPhoneNumber(rdt.getPhoneNumber());
                 u.setJobId(job);
                 u.setJobCategoryId(jobCategory);
@@ -294,11 +294,7 @@
             } else if (ud.getRole() != null) {
                 u.setRole(ud.getRole());
             } else if (ud.getSubRole() != null) {
-                try {
-                    u.setSubRole(SubRole.valueOf(ud.getSubRole()));  // Convert string to enum
-                } catch (IllegalArgumentException e) {
-                    throw new IllegalArgumentException("Invalid subRole: " + ud.getSubRole());
-                }
+                u.setSubRole(ud.getSubRole());
             } else if (ud.getBirthDate() != null) {
                 u.setBirthDate(ud.getBirthDate());
             } else if (ud.getPassword() != null) {
