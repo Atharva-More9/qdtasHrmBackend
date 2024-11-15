@@ -262,51 +262,68 @@
 
             if (ud.getUserName() != null) {
                 u.setUserName(ud.getUserName());
-            } else if (ud.getFirstName()!= null) {
+            }
+            if (ud.getFirstName() != null) {
                 u.setFirstName(ud.getFirstName());
-            } else if (ud.getMiddleName() != null) {
+            }
+            if (ud.getMiddleName() != null) {
                 u.setMiddleName(ud.getMiddleName());
-            } else if (ud.getLastName() != null) {
+            }
+            if (ud.getLastName() != null) {
                 u.setLastName(ud.getLastName());
-            } else if (ud.getAddress() != null) {
+            }
+            if (ud.getAddress() != null) {
                 u.setAddress(ud.getAddress());
-            } else if (ud.getPhoneNumber() != null) {
+            }
+            if (ud.getPhoneNumber() != null) {
                 u.setPhoneNumber(ud.getPhoneNumber());
-            } else if (ud.getEmail() != null) {
-                if (u.getEmail().equals(ud.getEmail())){
-
-                }else {
+            }
+            if (ud.getEmail() != null) {
+                if (!u.getEmail().equals(ud.getEmail())) {
                     u.setEmail(ud.getEmail());
                     ems.sendVerificationEmail(ud.getEmail());
                     u.setEmailVerified(false);
                 }
-            } else if (ud.getGender() != null) {
+            }
+            if (ud.getGender() != null) {
                 u.setGender(ud.getGender());
-            } else if (ud.getJobId() != 0) {
-                Job byId = jobrp.findById(ud.getJobId()).orElseThrow(() -> new ResourceNotFoundException("Job","job_id",String.valueOf(ud.getJobId())));
+            }
+            if (ud.getJobId() != 0) {
+                Job byId = jobrp.findById(ud.getJobId())
+                        .orElseThrow(() -> new ResourceNotFoundException("Job", "job_id", String.valueOf(ud.getJobId())));
                 u.setJobId(byId);
-            } else if (ud.getEmploymentStatusId() != 0){
-                EmploymentStatus byId = esrp.findById(ud.getEmploymentStatusId()).orElseThrow(() -> new ResourceNotFoundException("EmploymentStatus","employmentStatus_id",String.valueOf(ud.getEmploymentStatusId())));
+            }
+            if (ud.getEmploymentStatusId() != 0) {
+                EmploymentStatus byId = esrp.findById(ud.getEmploymentStatusId())
+                        .orElseThrow(() -> new ResourceNotFoundException("EmploymentStatus", "employmentStatus_id", String.valueOf(ud.getEmploymentStatusId())));
                 u.setEmploymentStatusId(byId);
-            } else if (ud.getJobCategoryId() != 0) {
-                JobCategory byId = jrp.findById(ud.getJobCategoryId()).orElseThrow(() -> new ResourceNotFoundException("JobCategory","jobCategory_id",String.valueOf(ud.getJobCategoryId())));
+            }
+            if (ud.getJobCategoryId() != 0) {
+                JobCategory byId = jrp.findById(ud.getJobCategoryId())
+                        .orElseThrow(() -> new ResourceNotFoundException("JobCategory", "jobCategory_id", String.valueOf(ud.getJobCategoryId())));
                 u.setJobCategoryId(byId);
-            } else if (ud.getRole() != null) {
+            }
+            if (ud.getRole() != null) {
                 u.setRole(ud.getRole());
-            } else if (ud.getSubRole() != null) {
+            }
+            if (ud.getSubRole() != null) {
                 u.setSubRole(ud.getSubRole());
-            } else if (ud.getBirthDate() != null) {
+            }
+            if (ud.getBirthDate() != null) {
                 u.setBirthDate(ud.getBirthDate());
-            } else if (ud.getPassword() != null) {
+            }
+            if (ud.getPassword() != null) {
                 u.setPassword(pnc.encode(ud.getPassword()));
-            } else if (ud.getDeptId() != 0) {
-                Department byId = drp.findById(ud.getDeptId()).orElseThrow(()->new ResourceNotFoundException("Department","DepatmentId",String.valueOf(ud.getDeptId())));
+            }
+            if (ud.getDeptId() != 0) {
+                Department byId = drp.findById(ud.getDeptId())
+                        .orElseThrow(() -> new ResourceNotFoundException("Department", "department_id", String.valueOf(ud.getDeptId())));
                 u.setDept(byId);
             }
 
             return urp.save(u);
-
         }
+
 
         @Override
         public User userInfo(long uId) {
