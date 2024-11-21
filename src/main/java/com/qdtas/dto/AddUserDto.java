@@ -58,7 +58,7 @@ public class AddUserDto {
     @NotBlank(message = "Role cannot be blank")
     private String role;
 
-    @Pattern(regexp = "^[A-Z]*(_[A-Z]*)?$", message = "Only one underscore and Uppercase alphabates allowed")
+    @Pattern(regexp = "^[a-zA-Z]+$", message = "only alphabets are allowed")
     @NotBlank(message = "Sub Role cannot be blank")
     private String subRole;
 
