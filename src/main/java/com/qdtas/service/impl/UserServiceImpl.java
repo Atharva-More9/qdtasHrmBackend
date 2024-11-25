@@ -134,6 +134,7 @@
                 u.setMiddleName(rdt.getMiddleName());
                 u.setLastName(rdt.getLastName());
                 u.setGender(rdt.getGender());
+                u.setAddress(rdt.getAddress());
                 u.setDept(department);
                 u.setJoinDate(new Date());
                 u.setRole(Role.ROLE_USER.name());
