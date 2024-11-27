@@ -1,7 +1,6 @@
 package com.qdtas.controller;
 
-import com.qdtas.dto.JsonMessage;
-import com.qdtas.dto.ProjectDTO;
+import com.qdtas.dto.*;
 import com.qdtas.entity.Project;
 import com.qdtas.service.ProjectService;
 import io.swagger.annotations.ApiOperation;
@@ -121,24 +120,23 @@ public class ProjectController {
 
     @ApiOperation(value = "Assign employee", position = 1)
     @Operation(
-            description = "assign employee to project",
-            summary = "4.Assign Employee To Project",
-            responses = {
-                    @ApiResponse(
-                            description = "OK",
-                            responseCode = "200",
-                            content = @io.swagger.v3.oas.annotations.media.Content
-                    ),
-                    @ApiResponse(
-                            description = "Bad Request",
-                            responseCode = "400",
-                            content = @io.swagger.v3.oas.annotations.media.Content
+            description = "Assign employee to project",
+            summary = "4. Assign Employee To Project",
+            requestBody = @io.swagger.v3.oas.annotations.parameters.RequestBody(
+                    description = "Request body for assigning an employee to a project",
+                    required = true,
+                    content = @io.swagger.v3.oas.annotations.media.Content(
+                            schema = @io.swagger.v3.oas.annotations.media.Schema(implementation = AssignEmployeeDto.class)
                     )
+            ),
+            responses = {
+                    @ApiResponse(description = "OK", responseCode = "200"),
+                    @ApiResponse(description = "Bad Request", responseCode = "400")
             }
     )
     @PostMapping("/assignEmployee")
-    public ResponseEntity<?> assignEmp(@RequestParam(value = "empId", required = true) long empId, @RequestParam(value = "pId", required = true) long pId) {
-        return new ResponseEntity<>(psr.assignEmployee(empId, pId), HttpStatus.OK);
+    public ResponseEntity<?> assignEmp(@RequestBody AssignEmployeeDto dto) {
+        return new ResponseEntity<>(psr.assignEmployee(dto.getEmpId(), dto.getProjectId()), HttpStatus.OK);
     }
 
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -147,25 +145,25 @@ public class ProjectController {
 
     @ApiOperation(value = "Assign multiple employees", position = 1)
     @Operation(
-            description = "assign multile employees to project",
-            summary = "5.Assign multiple Employees To Project",
-            responses = {
-                    @ApiResponse(
-                            description = "OK",
-                            responseCode = "200",
-                            content = @io.swagger.v3.oas.annotations.media.Content
-                    ),
-                    @ApiResponse(
-                            description = "Bad Request",
-                            responseCode = "400",
-                            content = @io.swagger.v3.oas.annotations.media.Content
+            description = "Assign multiple employees to project",
+            summary = "5. Assign Multiple Employees To Project",
+            requestBody = @io.swagger.v3.oas.annotations.parameters.RequestBody(
+                    description = "Request body for assigning multiple employees to a project",
+                    required = true,
+                    content = @io.swagger.v3.oas.annotations.media.Content(
+                            schema = @io.swagger.v3.oas.annotations.media.Schema(implementation = AssignEmployeesDto.class)
                     )
+            ),
+            responses = {
+                    @ApiResponse(description = "OK", responseCode = "200"),
+                    @ApiResponse(description = "Bad Request", responseCode = "400")
             }
     )
     @PostMapping("/assignAll")
-    public ResponseEntity<?> assignAll(@RequestParam("empIds") List<Long> empIds, @RequestParam(value = "pId", required = true) long pId) {
-        return new ResponseEntity<>(psr.assignEmployees(empIds, pId), HttpStatus.OK);
+    public ResponseEntity<?> assignAll(@RequestBody AssignEmployeesDto dto) {
+        return new ResponseEntity<>(psr.assignEmployees(dto.getEmpIds(), dto.getProjectId()), HttpStatus.OK);
     }
+
 
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -284,56 +282,56 @@ public class ProjectController {
 
     // Assign Manager to Project
 
-    @ApiOperation(value = "Assigns Manager to the Project", position = 1)
     @Operation(
             description = "Assigns Manager to the Project",
-            summary = "9.Assigns Manager to the Project",
-            responses = {
-                    @ApiResponse(
-                            description = "OK",
-                            responseCode = "200",
-                            content = @io.swagger.v3.oas.annotations.media.Content
-                    ),
-                    @ApiResponse(
-                            description = "Bad Request",
-                            responseCode = "400",
-                            content = @io.swagger.v3.oas.annotations.media.Content
+            summary = "9. Assigns Manager to the Project",
+            requestBody = @io.swagger.v3.oas.annotations.parameters.RequestBody(
+                    description = "Request body to assign a manager",
+                    required = true,
+                    content = @io.swagger.v3.oas.annotations.media.Content(
+                            schema = @io.swagger.v3.oas.annotations.media.Schema(implementation = AssignManagerDto.class)
                     )
+            ),
+            responses = {
+                    @ApiResponse(description = "OK", responseCode = "200"),
+                    @ApiResponse(description = "Bad Request", responseCode = "400")
             }
     )
+
     @PostMapping("/assignManager")
-    public ResponseEntity<?> assignManager(@RequestParam( value = "pId", required = true) long pId, @RequestParam(value = "eId", required = true) long eId) {
-        Project project = psr.assignManager(eId, pId);
+    public ResponseEntity<?> assignManager(@RequestBody AssignManagerDto dto) {
+        Project project = psr.assignManager(dto.getEId(), dto.getProjectId());
         return new ResponseEntity<>(project, HttpStatus.OK);
     }
+
 
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     // Assign Multiple Managers to Project
 
-    @ApiOperation(value = "Assigns Multiple Managers to the Project", position = 1)
     @Operation(
             description = "Assigns Multiple Managers to the Project",
-            summary = "10.Assigns Multiple Managers to the Project",
-            responses = {
-                    @ApiResponse(
-                            description = "OK",
-                            responseCode = "200",
-                            content = @io.swagger.v3.oas.annotations.media.Content
-                    ),
-                    @ApiResponse(
-                            description = "Bad Request",
-                            responseCode = "400",
-                            content = @io.swagger.v3.oas.annotations.media.Content
+            summary = "10. Assigns Multiple Managers to the Project",
+            requestBody = @io.swagger.v3.oas.annotations.parameters.RequestBody(
+                    description = "Request body to assign multiple managers",
+                    required = true,
+                    content = @io.swagger.v3.oas.annotations.media.Content(
+                            schema = @io.swagger.v3.oas.annotations.media.Schema(implementation = AssignManagersDto.class)
                     )
+            ),
+            responses = {
+                    @ApiResponse(description = "OK", responseCode = "200"),
+                    @ApiResponse(description = "Bad Request", responseCode = "400")
             }
     )
 
+
     @PostMapping("/assignManagers")
-    public ResponseEntity<?> assignManagers(@RequestParam(value ="pId", required = true) long pId , @RequestParam(value = "managerIds" , required = true) List<Long> managerIds){
-        Project project = psr.assignManagers(managerIds, pId);
-        return new ResponseEntity<>(project , HttpStatus.OK);
+    public ResponseEntity<?> assignManagers(@RequestBody AssignManagersDto dto) {
+        Project project = psr.assignManagers(dto.getManagerIds(), dto.getProjectId());
+        return new ResponseEntity<>(project, HttpStatus.OK);
     }
+
 
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
