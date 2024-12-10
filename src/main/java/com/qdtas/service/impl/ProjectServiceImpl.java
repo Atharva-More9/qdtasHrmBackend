@@ -61,25 +61,42 @@ public class ProjectServiceImpl implements ProjectService {
 
     @Override
     public Project assignEmployee(long userId, long pId) {
-        Project project = prp.findById(pId).orElseThrow(() -> new ResourceNotFoundException("Project", "ProjectId", String.valueOf(pId)));
-        User u = urp.findById(userId).orElseThrow(() -> new ResourceNotFoundException("User", "UserdId", String.valueOf(userId)));
+        if (userId == 0) {
+            throw new IllegalArgumentException("User ID cannot be 0.");
+        }
+
+        Project project = prp.findById(pId).orElseThrow(() ->
+                new ResourceNotFoundException("Project", "ProjectId", String.valueOf(pId)));
+        User u = urp.findById(userId).orElseThrow(() ->
+                new ResourceNotFoundException("User", "UserId", String.valueOf(userId)));
+
         u.getProjects().add(project);
         project.getTeam().add(u);
+
         prp.save(project);
         urp.save(u);
+
         return project;
     }
 
     @Override
     public Project assignEmployees(List<Long> employeeIds, long pId) {
-        Project project = prp.findById(pId).orElseThrow(() -> new ResourceNotFoundException("Project", "ProjectId", String.valueOf(pId)));
+        if (employeeIds.contains(0L)) {
+            throw new IllegalArgumentException("Employee IDs cannot contain 0.");
+        }
+
+        Project project = prp.findById(pId).orElseThrow(() ->
+                new ResourceNotFoundException("Project", "ProjectId", String.valueOf(pId)));
         List<User> employeesToAssign = urp.findAllById(employeeIds);
+
         project.getTeam().addAll(employeesToAssign);
         for (User us : employeesToAssign) {
             us.getProjects().add(project);
         }
+
         prp.save(project);
         urp.saveAll(employeesToAssign);
+
         return project;
     }
 
@@ -115,38 +132,36 @@ public class ProjectServiceImpl implements ProjectService {
 
     @Override
     public Project assignManager(long userId, long pId) {
-        Project project = prp.findById(pId).orElseThrow(() -> new ResourceNotFoundException("Project", "ProjectId", String.valueOf(pId)));
-
-        if (project != null) {
-
-            User manager = urp.findById(userId).orElseThrow(() -> new ResourceNotFoundException("User", "UserId", String.valueOf(userId)));
-
-            if (manager != null) {
-
-                project.getManagers().add(manager);
-
-            }
+        if (userId == 0) {
+            throw new IllegalArgumentException("User ID cannot be 0.");
         }
+
+        Project project = prp.findById(pId).orElseThrow(() ->
+                new ResourceNotFoundException("Project", "ProjectId", String.valueOf(pId)));
+        User manager = urp.findById(userId).orElseThrow(() ->
+                new ResourceNotFoundException("User", "UserId", String.valueOf(userId)));
+
+        project.getManagers().add(manager);
+
         return prp.save(project);
     }
 
     @Override
     public Project assignManagers(List<Long> managerIds, long pId) {
-        Project project = prp.findById(pId).orElseThrow(() -> new ResourceNotFoundException("Project", "ProjectId", String.valueOf(pId)));
-
-        if (project != null) {
-
-            for (Long managerId : managerIds) {
-
-                User manager = urp.findById(managerId).orElseThrow(() -> new ResourceNotFoundException("User", "UserId", String.valueOf(managerIds)));
-
-                if (manager != null) {
-
-                    project.getManagers().add(manager);
-
-                }
-            }
+        if (managerIds.contains(0L)) {
+            throw new IllegalArgumentException("Manager IDs cannot contain 0.");
         }
+
+        Project project = prp.findById(pId).orElseThrow(() ->
+                new ResourceNotFoundException("Project", "ProjectId", String.valueOf(pId)));
+
+        for (Long managerId : managerIds) {
+            User manager = urp.findById(managerId).orElseThrow(() ->
+                    new ResourceNotFoundException("User", "UserId", String.valueOf(managerId)));
+
+            project.getManagers().add(manager);
+        }
+
         return prp.save(project);
     }
 
