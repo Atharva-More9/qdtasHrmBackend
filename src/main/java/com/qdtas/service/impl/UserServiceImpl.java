@@ -83,6 +83,13 @@
         }
 
         @Override
+        public void disableUser(long userId) {
+            User u = getById(userId);
+            u.setEmailVerified(false);
+            urp.save(u);
+        }
+
+        @Override
         public User getByEmail(String email) {
             User u = urp.findByEmail(email);
             if (u != null) {

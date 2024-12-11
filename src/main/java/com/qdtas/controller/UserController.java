@@ -183,6 +183,27 @@ public class UserController {
     }
 
     @Operation(
+            description = "Disable User(by Admin)",
+            summary = "disable a user",
+            responses = {
+                    @ApiResponse(
+                            description = "User Disabled Successfully", responseCode = "200", content = @io.swagger.v3.oas.annotations.media.Content
+                    ),
+                    @ApiResponse(
+                            description = "User Not Found With Id", responseCode = "400", content = @io.swagger.v3.oas.annotations.media.Content
+                    )
+            }
+    )
+    @PreAuthorize("hasRole('ADMIN')")
+    @PostMapping("/disableUser/{userId}")
+    public ResponseEntity<?> disableUserById(@PathVariable("userId") Long userId) {
+        ussr.disableUser(userId);
+        JsonMessage j = new JsonMessage("User Disabled Successfully");
+        return new ResponseEntity<>(j, HttpStatus.OK);
+    }
+
+
+    @Operation(
             description = "Reset Password",
             summary = "Reset a Password With Email",
             responses = {

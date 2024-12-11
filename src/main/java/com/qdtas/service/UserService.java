@@ -28,6 +28,8 @@ public interface UserService {
 
     public void enableUser(long userId);
 
+    public void disableUser(long userId);
+
     public List<User> searchUser(String keyword , int pgn,int sizes);
 
     public void forgotPassword(String email);
