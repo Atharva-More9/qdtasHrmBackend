@@ -23,5 +23,7 @@ public interface LeaveService {
 
     public int getLeaveCountByEmpId(Long id);
 
+    public Leave updateLeaveStatus(Long id);
+
     public int getTotalCount();
 }

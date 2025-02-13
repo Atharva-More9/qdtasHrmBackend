@@ -117,6 +117,29 @@ public class LeaveController {
     }
 
     @Operation(
+            description = "Update Leave Status (ADMIN only)",
+            summary = "Update leave status (Admin)",
+            responses = {
+                    @ApiResponse(
+                            description = "OK",
+                            responseCode = "200",
+                            content = @io.swagger.v3.oas.annotations.media.Content
+                    ),
+                    @ApiResponse(
+                            description = "Bad Request",
+                            responseCode = "400",
+                            content = @io.swagger.v3.oas.annotations.media.Content
+                    ),
+            }
+    )
+    @PreAuthorize("hasRole('ADMIN')")
+    @PutMapping("/updateStatus/{leaveId}")
+    public ResponseEntity<?> updateLeaveStatus(@PathVariable Long leaveId) {
+        return new ResponseEntity<>(leaveRequestService.updateLeaveStatus(leaveId), HttpStatus.OK);
+    }
+
+
+    @Operation(
             description = "Approve Leave Request (ADMIN only)",
             summary = "Approve request (Admin)",
             responses = {

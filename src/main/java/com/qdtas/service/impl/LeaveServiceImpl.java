@@ -223,6 +223,14 @@ public Leave approveLeaveRequest(Long id) {
     }
 
     @Override
+    public Leave updateLeaveStatus(Long id){
+        Leave leave = leaveRequestRepository.findById( id )
+                .orElseThrow(()-> new RuntimeException("leave request does not exist with this : "+ id));
+        leave.setStatus( LeaveStatus.PENDING.name());
+        return leaveRequestRepository.save( leave );
+    }
+
+    @Override
     public int getTotalCount() {
         return (int)leaveRepository.count();
     }
